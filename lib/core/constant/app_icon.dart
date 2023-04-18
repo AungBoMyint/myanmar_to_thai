@@ -14,4 +14,8 @@ class AppIcon {
   static const String travellerAdvanced = "assets/traveller_advanced.png";
   static const String travellerBasic = "assets/traveller_basic.png";
   static const String worldWide = "assets/worldwide.png";
+  static const String plus = "assets/plus.png";
+  static const String delete = "assets/delete.png";
+  static const String edit = "assets/edit.png";
+  static const String user = "assets/user.png";
 }

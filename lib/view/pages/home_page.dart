@@ -41,6 +41,61 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: false,
         titleTextStyle: textTheme.displayMedium,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.dialog(
+                Center(
+                  child: SizedBox(
+                    height: 180,
+                    width: size.width * 0.6,
+                    child: Card(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        top: 10,
+                        bottom: 10,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //Title
+                          Text(
+                            "Sign In Option",
+                            style: textTheme.displayMedium,
+                          ),
+                          verticalSpace(v: 20),
+                          SignInButton(
+                            textTheme: textTheme,
+                            onPressed: () {},
+                            color: Color(0xFF2EB118),
+                            text: "Google",
+                            imageIcon: AppIcon.user,
+                          ),
+                          verticalSpace(v: 2),
+                          SignInButton(
+                            textTheme: textTheme,
+                            onPressed: () {},
+                            color: Color(0xFFD68BE3),
+                            text: "Guest",
+                            imageIcon: AppIcon.user,
+                          ),
+                        ],
+                      ),
+                    )),
+                  ),
+                ),
+                barrierColor: Colors.transparent,
+              );
+            },
+            icon: Image.asset(
+              AppIcon.user,
+              width: 25,
+              height: 25,
+            ),
+          )
+        ],
       ),
       body: ListView(
         /*  shrinkWrap: true, */
@@ -248,6 +303,57 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SignInButton extends StatelessWidget {
+  const SignInButton({
+    super.key,
+    required this.textTheme,
+    required this.onPressed,
+    required this.color,
+    required this.text,
+    required this.imageIcon,
+  });
+
+  final TextTheme textTheme;
+  final void Function()? onPressed;
+  final Color color;
+  final String text;
+  final String imageIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              20,
+            ),
+          ),
+        ),
+      ),
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: textTheme.displaySmall?.copyWith(
+                color: Colors.white,
+              ),
+            ),
+            horizontalSpace(v: 20),
+            Image.asset(
+              imageIcon,
+              width: 20,
+              height: 20,
+            )
+          ]),
     );
   }
 }

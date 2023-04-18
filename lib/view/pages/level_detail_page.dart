@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
 import '../widgets/core.dart';
+import 'lesson_detail_page.dart';
 
 class LevelDetailPage extends StatelessWidget {
   const LevelDetailPage({super.key});
@@ -59,34 +61,46 @@ class LevelDetailPage extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   final lesson = lessonList[index];
-                  return Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            15,
+                  return InkWell(
+                    onTap: () => Get.to(
+                      () => const LessonDetailPage(),
+                      arguments: {
+                        "title": title,
+                        "level": level,
+                        "level_image": levelImage,
+                        "lesson": lesson.title,
+                        "lesson_image": lesson.image,
+                      },
+                    ),
+                    child: Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              15,
+                            ),
                           ),
+                          side: BorderSide(
+                            color: Colors.grey,
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              lesson.image,
+                              width: 40,
+                              height: 40,
+                            ),
+                            verticalSpace(),
+                            Text(
+                              lesson.title,
+                              style: textTheme.headlineSmall,
+                            ),
+                          ],
                         ),
-                        side: BorderSide(
-                          color: Colors.grey,
-                        )),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            lesson.image,
-                            width: 40,
-                            height: 40,
-                          ),
-                          verticalSpace(),
-                          Text(
-                            lesson.title,
-                            style: textTheme.headlineSmall,
-                          ),
-                        ],
                       ),
                     ),
                   );

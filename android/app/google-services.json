@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244634423818",
+    "project_id": "myanmar-to-thai",
+    "storage_bucket": "myanmar-to-thai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244634423818:android:1b631b9fe92c374564c5f3",
+        "android_client_info": {
+          "package_name": "com.example.myanmar_to_thai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244634423818-fqmp085r07r48q03j9bkde79kpmhmmrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxnpUHl_JXM0g2SGGy_2AQ3tlD470YxFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244634423818-fqmp085r07r48q03j9bkde79kpmhmmrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
