@@ -3,16 +3,16 @@ import 'package:get/get.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../widgets/core.dart';
-import 'manage_lessons.dart';
+import 'manage_content.dart';
 
-class ManageStudy extends StatefulWidget {
-  const ManageStudy({super.key});
+class ManageLessons extends StatefulWidget {
+  const ManageLessons({super.key});
 
   @override
-  State<ManageStudy> createState() => _ManageStudyState();
+  State<ManageLessons> createState() => _ManageLessonsState();
 }
 
-class _ManageStudyState extends State<ManageStudy>
+class _ManageLessonsState extends State<ManageLessons>
     with TickerProviderStateMixin {
   late AnimationController animationController;
   var selectedAddItem = "";
@@ -28,17 +28,12 @@ class _ManageStudyState extends State<ManageStudy>
   }
 
   @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    const twoColumnHeight = 295.0;
+    const twoColumnHeight = 395.0;
     const oneColumnHeight = 65.0;
     final size = MediaQuery.of(context).size;
+    final level = Get.arguments["level"] as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,62 +43,67 @@ class _ManageStudyState extends State<ManageStudy>
         shrinkWrap: true,
         children: [
           verticalSpace(),
-          LevelItemWidget(
-            editOnPressed: () => Get.to(
-              () => const ManageLessons(),
-              arguments: {"level": "Beginner"},
+          Align(
+            alignment: Alignment.topCenter,
+            child: Text(
+              level,
+              style: textTheme.displayLarge,
             ),
-            addOnPressed: () {
-              if (mounted) {
-                if (selectedAddItem == "Beginner") {
-                  animationController.reverse();
-                  Future.delayed(const Duration(milliseconds: 10))
-                      .then((value) {
-                    setState(() {
-                      selectedAddItem = "";
-                    });
-                  });
-                } else {
-                  animationController.forward();
-                  setState(() {
-                    selectedAddItem = "Beginner";
-                  });
-                }
-              }
+          ),
+          verticalSpace(),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+              ),
+              child: Text(
+                "Lessons:",
+                style: textTheme.displaySmall,
+              ),
+            ),
+          ),
+          verticalSpace(v: 15),
+          ListView.separated(
+            shrinkWrap: true,
+            itemCount: 10,
+            separatorBuilder: (context, index) {
+              return verticalSpace();
             },
-            text: "Beginner",
-            imageIcon: AppIcon.basic,
-            isSelected: selectedAddItem == "Beginner",
-            twoColumnHeight: twoColumnHeight,
-            oneColumnHeight: oneColumnHeight,
-            animationController: animationController,
-            textTheme: textTheme,
-            size: size,
-          ),
-          verticalSpace(),
-          LevelItemWidget(
-            isSelected: selectedAddItem == "Traveler Basic",
-            twoColumnHeight: twoColumnHeight,
-            oneColumnHeight: oneColumnHeight,
-            animationController: animationController,
-            textTheme: textTheme,
-            size: size,
-            text: "Traveler Basic",
-            imageIcon: AppIcon.travellerBasic,
-          ),
-          verticalSpace(),
-          LevelRowContainer(
-            textTheme: textTheme,
-            size: size,
-            text: "Traveler Advanced",
-            imageIcon: AppIcon.travellerAdvanced,
-          ),
-          verticalSpace(),
-          LevelRowContainer(
-            size: size,
-            textTheme: textTheme,
-            text: "Expat",
-            imageIcon: AppIcon.expat,
+            itemBuilder: (context, index) {
+              return LessonItemWidget(
+                editOnPressed: () => Get.to(
+                  () => const ManageContent(),
+                  arguments: {"level": "Beginner", "lesson": "Numbers"},
+                ),
+                addOnPressed: () {
+                  if (mounted) {
+                    if (selectedAddItem == "$index") {
+                      animationController.reverse();
+                      Future.delayed(const Duration(milliseconds: 10))
+                          .then((value) {
+                        setState(() {
+                          selectedAddItem = "";
+                        });
+                      });
+                    } else {
+                      animationController.forward();
+                      setState(() {
+                        selectedAddItem = "$index";
+                      });
+                    }
+                  }
+                },
+                text: "Numbers",
+                imageIcon: AppIcon.oneTwoThree,
+                isSelected: selectedAddItem == "$index",
+                twoColumnHeight: twoColumnHeight,
+                oneColumnHeight: oneColumnHeight,
+                animationController: animationController,
+                textTheme: textTheme,
+                size: size,
+              );
+            },
           ),
         ],
       ),
@@ -111,8 +111,8 @@ class _ManageStudyState extends State<ManageStudy>
   }
 }
 
-class LevelItemWidget extends StatelessWidget {
-  const LevelItemWidget({
+class LessonItemWidget extends StatelessWidget {
+  const LessonItemWidget({
     super.key,
     required this.isSelected,
     required this.twoColumnHeight,
@@ -175,7 +175,7 @@ class LevelItemWidget extends StatelessWidget {
                       opacity: animationController.value,
                       duration: animationController.duration!,
                       child: Container(
-                        height: 250,
+                        height: 350,
                         color: Colors.white,
                         padding: const EdgeInsets.only(
                           top: 25,
@@ -189,13 +189,13 @@ class LevelItemWidget extends StatelessWidget {
                                   children: [
                                     verticalSpace(v: 5),
                                     Text(
-                                      "Add Lesson",
+                                      "Add Content",
                                       style: textTheme.displaySmall,
                                     ),
                                     verticalSpace(v: 15),
                                     TextFormField(
                                       decoration: InputDecoration(
-                                        labelText: "Text",
+                                        labelText: "Myanmar",
                                         border: textFieldBorder,
                                         /* disabledBorder: textFieldBorder,
                                                   focusedBorder: textFieldBorder,
@@ -207,14 +207,53 @@ class LevelItemWidget extends StatelessWidget {
                                             FloatingLabelBehavior.always,
                                       ),
                                     ),
-                                    verticalSpace(v: 5),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.add_a_photo,
-                                        size: 50,
-                                        color: Colors.grey,
+                                    verticalSpace(v: 15),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Thai",
+                                        border: textFieldBorder,
+                                        /* disabledBorder: textFieldBorder,
+                                                  focusedBorder: textFieldBorder,
+                                                  enabledBorder: textFieldBorder, */
+                                        floatingLabelStyle: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
                                       ),
+                                    ),
+                                    verticalSpace(v: 10),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 20),
+                                      child: SizedBox(
+                                          height: 50,
+                                          child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {},
+                                                  child: Image.asset(
+                                                    AppIcon.addImage,
+                                                    width: 50,
+                                                    height: 50,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {},
+                                                  child: Image.asset(
+                                                    AppIcon.addAudio,
+                                                    width: 50,
+                                                    height: 50,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ])),
                                     ),
                                     verticalSpace(v: 20),
                                     SizedBox(
@@ -252,7 +291,7 @@ class LevelItemWidget extends StatelessWidget {
                 /*  : const SizedBox(), */
                 Align(
                   alignment: Alignment.topCenter,
-                  child: LevelRowContainer(
+                  child: LessonRowContainer(
                     textTheme: textTheme,
                     text: text,
                     size: size,
@@ -268,8 +307,8 @@ class LevelItemWidget extends StatelessWidget {
   }
 }
 
-class LevelRowContainer extends StatelessWidget {
-  const LevelRowContainer({
+class LessonRowContainer extends StatelessWidget {
+  const LessonRowContainer({
     super.key,
     required this.textTheme,
     required this.text,

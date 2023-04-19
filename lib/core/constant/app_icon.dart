@@ -20,4 +20,7 @@ class AppIcon {
   static const String user = "assets/user.png";
   static const String guest = "assets/guest.png";
   static const String google = "assets/g.png";
+  static const String addImage = "assets/image.png";
+  static const String addAudio = "assets/audio.png";
+  static const String playAudio = "assets/play.png";
 }
