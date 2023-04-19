@@ -5,6 +5,7 @@ import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
 import '../widgets/core.dart';
 import 'level_detail_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -68,10 +69,10 @@ class HomePage extends StatelessWidget {
                           verticalSpace(v: 20),
                           SignInButton(
                             textTheme: textTheme,
-                            onPressed: () {},
+                            onPressed: () => Get.to(() => const ProfilePage()),
                             color: Color(0xFF2EB118),
                             text: "Google",
-                            imageIcon: AppIcon.user,
+                            imageIcon: AppIcon.google,
                           ),
                           verticalSpace(v: 2),
                           SignInButton(
@@ -79,7 +80,7 @@ class HomePage extends StatelessWidget {
                             onPressed: () {},
                             color: Color(0xFFD68BE3),
                             text: "Guest",
-                            imageIcon: AppIcon.user,
+                            imageIcon: AppIcon.guest,
                           ),
                         ],
                       ),

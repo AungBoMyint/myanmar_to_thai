@@ -18,4 +18,6 @@ class AppIcon {
   static const String delete = "assets/delete.png";
   static const String edit = "assets/edit.png";
   static const String user = "assets/user.png";
+  static const String guest = "assets/guest.png";
+  static const String google = "assets/g.png";
 }

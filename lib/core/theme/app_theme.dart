@@ -46,16 +46,17 @@ class AppTheme {
       ),
       brightness: Brightness.light,
       textTheme: lightTextTheme,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 3,
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        actionsIconTheme: IconThemeData(
+        actionsIconTheme: const IconThemeData(
           color: Colors.black,
         ),
         centerTitle: true,
+        titleTextStyle: lightTextTheme.displayMedium,
       ),
       cardTheme: const CardTheme(
         elevation: 3,
