@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "244634423818-fqmp085r07r48q03j9bkde79kpmhmmrr.apps.googleusercontent.com",
+          "client_id": "244634423818-v6mm330drfcd681vr7op7tq42eu63ojd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +29,13 @@
             {
               "client_id": "244634423818-fqmp085r07r48q03j9bkde79kpmhmmrr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "244634423818-7dvtd8kgti6mi7u0d2vqhpt2lk6dis5r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myanmarToThai"
+              }
             }
           ]
         }

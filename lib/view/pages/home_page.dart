@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/auth_controller.dart';
 import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
+import '../../core/router/router.dart';
 import '../widgets/core.dart';
 import 'level_detail_page.dart';
 import 'profile_page.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find();
     final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -45,50 +48,58 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.dialog(
-                Center(
-                  child: SizedBox(
-                    height: 180,
-                    width: size.width * 0.6,
-                    child: Card(
-                        child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 25,
-                        right: 25,
-                        top: 10,
-                        bottom: 10,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          //Title
-                          Text(
-                            "Sign In Option",
-                            style: textTheme.displayMedium,
-                          ),
-                          verticalSpace(v: 20),
-                          SignInButton(
-                            textTheme: textTheme,
-                            onPressed: () => Get.to(() => const ProfilePage()),
-                            color: Color(0xFF2EB118),
-                            text: "Google",
-                            imageIcon: AppIcon.google,
-                          ),
-                          verticalSpace(v: 2),
-                          SignInButton(
-                            textTheme: textTheme,
-                            onPressed: () {},
-                            color: Color(0xFFD68BE3),
-                            text: "Guest",
-                            imageIcon: AppIcon.guest,
-                          ),
-                        ],
-                      ),
-                    )),
+              //first check user is auth or not
+              if (!authController.checkUserAuth()) {
+                Get.dialog(
+                  Center(
+                    child: SizedBox(
+                      height: 180,
+                      width: size.width * 0.6,
+                      child: Card(
+                          child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 25,
+                          right: 25,
+                          top: 10,
+                          bottom: 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            //Title
+                            Text(
+                              "Sign In Option",
+                              style: textTheme.displayMedium,
+                            ),
+                            verticalSpace(v: 20),
+                            SignInButton(
+                              textTheme: textTheme,
+                              onPressed: () {
+                                Get.back();
+                                authController.signInWithGoogle(profilePage);
+                              },
+                              color: Color(0xFF2EB118),
+                              text: "Google",
+                              imageIcon: AppIcon.google,
+                            ),
+                            verticalSpace(v: 2),
+                            SignInButton(
+                              textTheme: textTheme,
+                              onPressed: () {},
+                              color: Color(0xFFD68BE3),
+                              text: "Guest",
+                              imageIcon: AppIcon.guest,
+                            ),
+                          ],
+                        ),
+                      )),
+                    ),
                   ),
-                ),
-                barrierColor: Colors.transparent,
-              );
+                  barrierColor: Colors.transparent,
+                );
+              } else {
+                Get.toNamed(profilePage);
+              }
             },
             icon: Image.asset(
               AppIcon.user,

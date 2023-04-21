@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../model/lesson.dart';
+import '../../model/lesson_ui_model.dart';
 import '../../model/phrases_ui_model.dart';
 import '../constant/app_icon.dart';
 
@@ -27,8 +27,8 @@ const List<PhrasesUiModel> phrasesUiModelList = [
   ),
 ];
 
-const List<Lesson> lessonList = [
-  Lesson(title: "Numbers", image: AppIcon.oneTwoThree),
-  Lesson(title: "Time & Date", image: AppIcon.clock),
-  Lesson(title: "Basic Conversation", image: AppIcon.speak),
+const List<LessonUiModel> lessonList = [
+  LessonUiModel(title: "Numbers", image: AppIcon.oneTwoThree),
+  LessonUiModel(title: "Time & Date", image: AppIcon.clock),
+  LessonUiModel(title: "Basic Conversation", image: AppIcon.speak),
 ];
