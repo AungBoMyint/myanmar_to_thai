@@ -25,6 +25,7 @@ mixin _$Question {
       throw _privateConstructorUsedError; //"content's id"
   List<String> get choiceItems => throw _privateConstructorUsedError;
   String get answer => throw _privateConstructorUsedError;
+  String get questionType => throw _privateConstructorUsedError;
   String get classLevelLesson => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $QuestionCopyWith<$Res> {
       String questionContentID,
       List<String> choiceItems,
       String answer,
+      String questionType,
       String classLevelLesson});
 }
 
@@ -63,6 +65,7 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
     Object? questionContentID = null,
     Object? choiceItems = null,
     Object? answer = null,
+    Object? questionType = null,
     Object? classLevelLesson = null,
   }) {
     return _then(_value.copyWith(
@@ -81,6 +84,10 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
       answer: null == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      questionType: null == questionType
+          ? _value.questionType
+          : questionType // ignore: cast_nullable_to_non_nullable
               as String,
       classLevelLesson: null == classLevelLesson
           ? _value.classLevelLesson
@@ -102,6 +109,7 @@ abstract class _$$_QuestionCopyWith<$Res> implements $QuestionCopyWith<$Res> {
       String questionContentID,
       List<String> choiceItems,
       String answer,
+      String questionType,
       String classLevelLesson});
 }
 
@@ -120,6 +128,7 @@ class __$$_QuestionCopyWithImpl<$Res>
     Object? questionContentID = null,
     Object? choiceItems = null,
     Object? answer = null,
+    Object? questionType = null,
     Object? classLevelLesson = null,
   }) {
     return _then(_$_Question(
@@ -139,6 +148,10 @@ class __$$_QuestionCopyWithImpl<$Res>
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String,
+      questionType: null == questionType
+          ? _value.questionType
+          : questionType // ignore: cast_nullable_to_non_nullable
+              as String,
       classLevelLesson: null == classLevelLesson
           ? _value.classLevelLesson
           : classLevelLesson // ignore: cast_nullable_to_non_nullable
@@ -155,6 +168,7 @@ class _$_Question implements _Question {
       required this.questionContentID,
       required final List<String> choiceItems,
       required this.answer,
+      required this.questionType,
       required this.classLevelLesson})
       : _choiceItems = choiceItems;
 
@@ -178,11 +192,13 @@ class _$_Question implements _Question {
   @override
   final String answer;
   @override
+  final String questionType;
+  @override
   final String classLevelLesson;
 
   @override
   String toString() {
-    return 'Question(id: $id, questionContentID: $questionContentID, choiceItems: $choiceItems, answer: $answer, classLevelLesson: $classLevelLesson)';
+    return 'Question(id: $id, questionContentID: $questionContentID, choiceItems: $choiceItems, answer: $answer, questionType: $questionType, classLevelLesson: $classLevelLesson)';
   }
 
   @override
@@ -196,6 +212,8 @@ class _$_Question implements _Question {
             const DeepCollectionEquality()
                 .equals(other._choiceItems, _choiceItems) &&
             (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.questionType, questionType) ||
+                other.questionType == questionType) &&
             (identical(other.classLevelLesson, classLevelLesson) ||
                 other.classLevelLesson == classLevelLesson));
   }
@@ -208,6 +226,7 @@ class _$_Question implements _Question {
       questionContentID,
       const DeepCollectionEquality().hash(_choiceItems),
       answer,
+      questionType,
       classLevelLesson);
 
   @JsonKey(ignore: true)
@@ -230,6 +249,7 @@ abstract class _Question implements Question {
       required final String questionContentID,
       required final List<String> choiceItems,
       required final String answer,
+      required final String questionType,
       required final String classLevelLesson}) = _$_Question;
 
   factory _Question.fromJson(Map<String, dynamic> json) = _$_Question.fromJson;
@@ -242,6 +262,8 @@ abstract class _Question implements Question {
   List<String> get choiceItems;
   @override
   String get answer;
+  @override
+  String get questionType;
   @override
   String get classLevelLesson;
   @override

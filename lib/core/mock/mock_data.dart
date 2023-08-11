@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myanmar_to_thai/model/remote/circle_position.dart';
 import 'package:myanmar_to_thai/model/remote/content.dart';
 import 'package:myanmar_to_thai/model/remote/question.dart';
 import 'package:uuid/uuid.dart';
@@ -6,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../model/lesson_ui_model.dart';
 import '../../model/phrases_ui_model.dart';
 import '../constant/app_icon.dart';
+import '../constant/constant.dart';
 
 const List<PhrasesUiModel> phrasesUiModelList = [
   PhrasesUiModel(
@@ -42,7 +44,8 @@ final List<Content> numberLessonContents = [
     id: Uuid().v1(),
     myanmar: "တစ်",
     thai: "หนึ่ง",
-    audio: "",
+    audio:
+        "https://learnthaifromawhiteguy.com/speech/%E0%B8%AB%E0%B8%99%E0%B8%B6%E0%B9%88%E0%B8%87.mp3",
     image: "https://cdn-icons-png.flaticon.com/128/3601/3601002.png",
     classLevelLesson: "",
   ),
@@ -51,7 +54,8 @@ final List<Content> numberLessonContents = [
     id: Uuid().v1(),
     myanmar: "နှစ်",
     thai: "สอง",
-    audio: "",
+    audio:
+        "https://learnthaifromawhiteguy.com/speech/%E0%B8%AA%E0%B8%AD%E0%B8%87.mp3",
     image: "https://cdn-icons-png.flaticon.com/128/8921/8921602.png",
     classLevelLesson: "",
   ),
@@ -60,7 +64,8 @@ final List<Content> numberLessonContents = [
     id: Uuid().v1(),
     myanmar: "သုံး",
     thai: "สาม",
-    audio: "",
+    audio:
+        "https://learnthaifromawhiteguy.com/speech/%E0%B8%AA%E0%B8%B2%E0%B8%A1.mp3",
     image: "https://cdn-icons-png.flaticon.com/128/10979/10979011.png",
     classLevelLesson: "",
   ),
@@ -87,6 +92,7 @@ final List<Content> numberLessonContents = [
 final List<Question> questionList = [
   Question(
     id: Uuid().v1(),
+    questionType: selectRactangle,
     questionContentID: "ฝนตกแต่เช้า--F̄n tk tæ̀ chêā",
     choiceItems: [
       "ကျောင်းသို့သွားသည်",
@@ -99,9 +105,37 @@ final List<Question> questionList = [
   ),
   Question(
     id: Uuid().v1(),
+    questionType: selectRactangle,
     questionContentID: "คุณเป็นอย่างไร?--Khuṇ pĕn xỳāngrị?",
     choiceItems: ["အဆင်ပြေရဲ့လား", "ဘယ်မှာနေလဲ", "နေကောင်းလား", "ဘယ်အချိန်လဲ"],
     answer: "နေကောင်းလား",
     classLevelLesson: '',
   ),
+  Question(
+    id: Uuid().v1(),
+    questionType: selectCircle,
+    questionContentID: "สิบเอ็ด--S̄ib xĕd",
+    choiceItems: ["၈", "၅", "၁၁", "၂"],
+    answer: "၁၁",
+    classLevelLesson: '',
+  ),
+];
+
+List<CirclePosition> circlePositions = [
+  CirclePosition(
+    left: 40,
+    top: 40,
+  ),
+  CirclePosition(
+    right: 40,
+    top: 40,
+  ),
+  CirclePosition(
+    left: 40,
+    bottom: 40,
+  ),
+  CirclePosition(
+    right: 40,
+    bottom: 40,
+  )
 ];

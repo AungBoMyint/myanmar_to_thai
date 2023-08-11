@@ -13,6 +13,7 @@ _$_Question _$$_QuestionFromJson(Map<String, dynamic> json) => _$_Question(
           .map((e) => e as String)
           .toList(),
       answer: json['answer'] as String,
+      questionType: json['questionType'] as String,
       classLevelLesson: json['classLevelLesson'] as String,
     );
 
@@ -22,5 +23,6 @@ Map<String, dynamic> _$$_QuestionToJson(_$_Question instance) =>
       'questionContentID': instance.questionContentID,
       'choiceItems': instance.choiceItems,
       'answer': instance.answer,
+      'questionType': instance.questionType,
       'classLevelLesson': instance.classLevelLesson,
     };

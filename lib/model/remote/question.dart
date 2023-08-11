@@ -10,6 +10,7 @@ class Question with _$Question {
     required String questionContentID, //"content's id"
     required List<String> choiceItems,
     required String answer,
+    required String questionType,
     required String classLevelLesson, //classID-levelID-lessonID
   }) = _Question;
 

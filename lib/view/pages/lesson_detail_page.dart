@@ -94,33 +94,39 @@ class LessonDetailPage extends StatelessWidget {
                 ),
                 verticalSpace(v: 25),
                 //Play Audio Icon
-                Image.asset(
-                  AppIcon.play,
-                  width: 50,
-                  height: 50,
+                InkWell(
+                  onTap: () => ldController.playNormal(content.audio),
+                  child: Image.asset(
+                    AppIcon.play,
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
                 verticalSpace(v: 25),
                 //Slow Audio Icon
                 SizedBox(
                   width: 120,
                   child: containerWithBoxDecoration(
-                      child: Row(
-                    children: [
-                      Image.asset(
-                        AppIcon.snail,
-                        width: 30,
-                        height: 30,
-                      ),
-                      horizontalSpace(v: 8),
-                      const Text(
-                        "Play Slowly",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
+                      child: InkWell(
+                    onTap: () => ldController.playSnail(content.audio),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          AppIcon.snail,
+                          width: 30,
+                          height: 30,
                         ),
-                      ),
-                    ],
-                  ).withSymmetricPadding(v: 5, h: 5)),
+                        horizontalSpace(v: 8),
+                        const Text(
+                          "Play Slowly",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ).withSymmetricPadding(v: 5, h: 5),
+                  )),
                 ),
                 verticalSpace(),
                 //Horizontal Divider

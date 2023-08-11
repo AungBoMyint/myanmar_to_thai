@@ -59,3 +59,6 @@ List<String> completeQuizDescriptionAlternatives = [
   'Your determination and knowledge shine as you conquer every question in the quiz. You\'ve completed the mission with excellence!',
   'Through your consistent effort and accurate responses, you\'ve proven your mastery of the quiz content. Your accomplishment is truly impressive!'
 ];
+
+const selectRactangle = "S-R";
+const selectCircle = "S-C";
