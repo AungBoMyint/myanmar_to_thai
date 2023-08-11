@@ -25,10 +25,15 @@ class AppTheme {
       fontSize: 16,
       fontWeight: FontWeight.bold,
     ),
+    headlineLarge: GoogleFonts.inter(
+      color: Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
   );
   static ThemeData lightTheme() {
     return ThemeData(
-      scaffoldBackgroundColor: const Color(0xFFF9F2F1),
+      scaffoldBackgroundColor: Colors.white /* const Color(0xFFF9F2F1) */,
       primarySwatch: const MaterialColor(
         0xFFFF5364,
         <int, Color>{
@@ -47,7 +52,7 @@ class AppTheme {
       brightness: Brightness.light,
       textTheme: lightTextTheme,
       appBarTheme: AppBarTheme(
-        elevation: 3,
+        elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black,

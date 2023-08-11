@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myanmar_to_thai/core/router/router.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
@@ -17,16 +18,49 @@ class LevelDetailPage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        toolbarHeight: 80,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Color(0xffff98a2),
+              child: CircleAvatar(
+                radius: 24,
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage(
+                  levelImage,
+                ),
+              ),
+            ),
+            horizontalSpace(),
+            Text(level),
+          ],
+        ),
         titleTextStyle: textTheme.displayMedium,
-        centerTitle: false,
+        centerTitle: true,
+        leading: Center(
+          child: InkWell(
+            splashColor: Colors.grey.shade500,
+            onTap: () => Get.back(),
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.grey.shade200,
+              child: Image.asset(
+                AppIcon.leftArrow,
+                width: 15,
+                height: 15,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           verticalSpace(v: 20),
           //Level
-          Row(
+          /*    Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -45,6 +79,7 @@ class LevelDetailPage extends StatelessWidget {
             ],
           ),
           verticalSpace(v: 20),
+           */
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -62,8 +97,8 @@ class LevelDetailPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final lesson = lessonList[index];
                   return InkWell(
-                    onTap: () => Get.to(
-                      () => const LessonDetailPage(),
+                    onTap: () => Get.toNamed(
+                      lessonDetailPage,
                       arguments: {
                         "title": title,
                         "level": level,

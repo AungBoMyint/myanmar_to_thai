@@ -22,5 +22,11 @@ class AppIcon {
   static const String google = "assets/g.png";
   static const String addImage = "assets/image.png";
   static const String addAudio = "assets/audio.png";
-  static const String playAudio = "assets/play.png";
+  static const String play = "assets/play.png";
+  static const String pause = "assets/pause-button.png";
+  static const String leftArrow = "assets/left-chevron.png";
+  static const String close = "assets/close.png";
+  static const String snail = "assets/snail.png";
+  static const String myanmar = "assets/myanmar.png";
+  static const String thailand = "assets/thailand.png";
 }

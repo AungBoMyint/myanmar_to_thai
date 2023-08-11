@@ -23,6 +23,7 @@ mixin _$Content {
   String get id => throw _privateConstructorUsedError;
   String get myanmar => throw _privateConstructorUsedError;
   String get thai => throw _privateConstructorUsedError;
+  String get pronuncation => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String get audio => throw _privateConstructorUsedError;
   String get classLevelLesson => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $ContentCopyWith<$Res> {
       {String id,
       String myanmar,
       String thai,
+      String pronuncation,
       String? image,
       String audio,
       String classLevelLesson});
@@ -62,6 +64,7 @@ class _$ContentCopyWithImpl<$Res, $Val extends Content>
     Object? id = null,
     Object? myanmar = null,
     Object? thai = null,
+    Object? pronuncation = null,
     Object? image = freezed,
     Object? audio = null,
     Object? classLevelLesson = null,
@@ -78,6 +81,10 @@ class _$ContentCopyWithImpl<$Res, $Val extends Content>
       thai: null == thai
           ? _value.thai
           : thai // ignore: cast_nullable_to_non_nullable
+              as String,
+      pronuncation: null == pronuncation
+          ? _value.pronuncation
+          : pronuncation // ignore: cast_nullable_to_non_nullable
               as String,
       image: freezed == image
           ? _value.image
@@ -106,6 +113,7 @@ abstract class _$$_ContentCopyWith<$Res> implements $ContentCopyWith<$Res> {
       {String id,
       String myanmar,
       String thai,
+      String pronuncation,
       String? image,
       String audio,
       String classLevelLesson});
@@ -124,6 +132,7 @@ class __$$_ContentCopyWithImpl<$Res>
     Object? id = null,
     Object? myanmar = null,
     Object? thai = null,
+    Object? pronuncation = null,
     Object? image = freezed,
     Object? audio = null,
     Object? classLevelLesson = null,
@@ -140,6 +149,10 @@ class __$$_ContentCopyWithImpl<$Res>
       thai: null == thai
           ? _value.thai
           : thai // ignore: cast_nullable_to_non_nullable
+              as String,
+      pronuncation: null == pronuncation
+          ? _value.pronuncation
+          : pronuncation // ignore: cast_nullable_to_non_nullable
               as String,
       image: freezed == image
           ? _value.image
@@ -164,6 +177,7 @@ class _$_Content implements _Content {
       {required this.id,
       required this.myanmar,
       required this.thai,
+      required this.pronuncation,
       this.image,
       required this.audio,
       required this.classLevelLesson});
@@ -178,6 +192,8 @@ class _$_Content implements _Content {
   @override
   final String thai;
   @override
+  final String pronuncation;
+  @override
   final String? image;
   @override
   final String audio;
@@ -186,7 +202,7 @@ class _$_Content implements _Content {
 
   @override
   String toString() {
-    return 'Content(id: $id, myanmar: $myanmar, thai: $thai, image: $image, audio: $audio, classLevelLesson: $classLevelLesson)';
+    return 'Content(id: $id, myanmar: $myanmar, thai: $thai, pronuncation: $pronuncation, image: $image, audio: $audio, classLevelLesson: $classLevelLesson)';
   }
 
   @override
@@ -197,6 +213,8 @@ class _$_Content implements _Content {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.myanmar, myanmar) || other.myanmar == myanmar) &&
             (identical(other.thai, thai) || other.thai == thai) &&
+            (identical(other.pronuncation, pronuncation) ||
+                other.pronuncation == pronuncation) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.audio, audio) || other.audio == audio) &&
             (identical(other.classLevelLesson, classLevelLesson) ||
@@ -205,8 +223,8 @@ class _$_Content implements _Content {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, myanmar, thai, image, audio, classLevelLesson);
+  int get hashCode => Object.hash(runtimeType, id, myanmar, thai, pronuncation,
+      image, audio, classLevelLesson);
 
   @JsonKey(ignore: true)
   @override
@@ -227,6 +245,7 @@ abstract class _Content implements Content {
       {required final String id,
       required final String myanmar,
       required final String thai,
+      required final String pronuncation,
       final String? image,
       required final String audio,
       required final String classLevelLesson}) = _$_Content;
@@ -239,6 +258,8 @@ abstract class _Content implements Content {
   String get myanmar;
   @override
   String get thai;
+  @override
+  String get pronuncation;
   @override
   String? get image;
   @override

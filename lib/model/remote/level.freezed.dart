@@ -23,6 +23,7 @@ mixin _$Level {
   String get id => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  String get classID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $LevelCopyWith<$Res> {
   factory $LevelCopyWith(Level value, $Res Function(Level) then) =
       _$LevelCopyWithImpl<$Res, Level>;
   @useResult
-  $Res call({String id, String image, String text});
+  $Res call({String id, String image, String text, String classID});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
     Object? id = null,
     Object? image = null,
     Object? text = null,
+    Object? classID = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -67,6 +69,10 @@ class _$LevelCopyWithImpl<$Res, $Val extends Level>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      classID: null == classID
+          ? _value.classID
+          : classID // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -77,7 +83,7 @@ abstract class _$$_LevelCopyWith<$Res> implements $LevelCopyWith<$Res> {
       __$$_LevelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String image, String text});
+  $Res call({String id, String image, String text, String classID});
 }
 
 /// @nodoc
@@ -92,6 +98,7 @@ class __$$_LevelCopyWithImpl<$Res> extends _$LevelCopyWithImpl<$Res, _$_Level>
     Object? id = null,
     Object? image = null,
     Object? text = null,
+    Object? classID = null,
   }) {
     return _then(_$_Level(
       id: null == id
@@ -106,6 +113,10 @@ class __$$_LevelCopyWithImpl<$Res> extends _$LevelCopyWithImpl<$Res, _$_Level>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      classID: null == classID
+          ? _value.classID
+          : classID // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -113,7 +124,11 @@ class __$$_LevelCopyWithImpl<$Res> extends _$LevelCopyWithImpl<$Res, _$_Level>
 /// @nodoc
 @JsonSerializable()
 class _$_Level implements _Level {
-  _$_Level({required this.id, required this.image, required this.text});
+  _$_Level(
+      {required this.id,
+      required this.image,
+      required this.text,
+      required this.classID});
 
   factory _$_Level.fromJson(Map<String, dynamic> json) =>
       _$$_LevelFromJson(json);
@@ -124,10 +139,12 @@ class _$_Level implements _Level {
   final String image;
   @override
   final String text;
+  @override
+  final String classID;
 
   @override
   String toString() {
-    return 'Level(id: $id, image: $image, text: $text)';
+    return 'Level(id: $id, image: $image, text: $text, classID: $classID)';
   }
 
   @override
@@ -137,12 +154,13 @@ class _$_Level implements _Level {
             other is _$_Level &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.text, text) || other.text == text));
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.classID, classID) || other.classID == classID));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, image, text);
+  int get hashCode => Object.hash(runtimeType, id, image, text, classID);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +180,8 @@ abstract class _Level implements Level {
   factory _Level(
       {required final String id,
       required final String image,
-      required final String text}) = _$_Level;
+      required final String text,
+      required final String classID}) = _$_Level;
 
   factory _Level.fromJson(Map<String, dynamic> json) = _$_Level.fromJson;
 
@@ -172,6 +191,8 @@ abstract class _Level implements Level {
   String get image;
   @override
   String get text;
+  @override
+  String get classID;
   @override
   @JsonKey(ignore: true)
   _$$_LevelCopyWith<_$_Level> get copyWith =>

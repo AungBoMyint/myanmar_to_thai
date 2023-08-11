@@ -9,6 +9,7 @@ class Level with _$Level {
     required String id,
     required String image,
     required String text,
+    required String classID,
   }) = _Level;
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);

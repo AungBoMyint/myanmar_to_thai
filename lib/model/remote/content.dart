@@ -9,6 +9,7 @@ class Content with _$Content {
     required String id,
     required String myanmar,
     required String thai,
+    required String pronuncation,
     String? image,
     required String audio,
     required String classLevelLesson, //classID-levelID-lessonID

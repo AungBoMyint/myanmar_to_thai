@@ -135,8 +135,8 @@ class HomePage extends StatelessWidget {
                   return Wrap(
                     children: [
                       RowContainer(
-                        onTap: () => Get.to(
-                          () => LevelDetailPage(),
+                        onTap: () => Get.toNamed(
+                          levelDetailPage,
                           arguments: {
                             "title": 'STUDY',
                             "level": 'Beginner',
@@ -272,40 +272,49 @@ class HomePage extends StatelessWidget {
                   separatorBuilder: (context, index) => verticalSpace(),
                   itemBuilder: (context, index) {
                     final uiModel = phrasesUiModelList[index];
-                    return Container(
-                      height: 65,
-                      padding: const EdgeInsets.all(
-                        8,
+                    return InkWell(
+                      onTap: () => Get.toNamed(
+                        questionPage,
+                        arguments: {
+                          "lesson": uiModel.text,
+                          "lesson_image": uiModel.imageIcon,
+                        },
                       ),
-                      decoration: BoxDecoration(
-                        color: uiModel.color,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(
-                            15,
-                          ),
+                      child: Container(
+                        height: 65,
+                        padding: const EdgeInsets.all(
+                          8,
                         ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          horizontalSpace(),
-                          //Icon
-                          Image.asset(
-                            uiModel.imageIcon,
-                            width: 35,
-                            height: 35,
-                          ),
-                          //Label Text
-                          horizontalSpace(
-                            v: 15,
-                          ),
-                          Text(
-                            uiModel.text,
-                            style: textTheme.headlineSmall?.copyWith(
-                              color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: uiModel.color,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              15,
                             ),
                           ),
-                        ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            horizontalSpace(),
+                            //Icon
+                            Image.asset(
+                              uiModel.imageIcon,
+                              width: 35,
+                              height: 35,
+                            ),
+                            //Label Text
+                            horizontalSpace(
+                              v: 15,
+                            ),
+                            Text(
+                              uiModel.text,
+                              style: textTheme.headlineSmall?.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
