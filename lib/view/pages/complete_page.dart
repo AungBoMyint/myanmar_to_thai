@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myanmar_to_thai/core/constant/app_animation.dart';
+import 'package:myanmar_to_thai/core/router/router.dart';
 import 'package:rive/rive.dart';
 import '../widgets/core.dart';
 
@@ -27,7 +28,7 @@ class CompletePage extends StatelessWidget {
                     width: size.width,
                     child:
                         const RiveAnimation.asset(AppAnimation.successLight)),
-                verticalSpace(v: 25),
+
                 //Title
                 Text(
                   title,
@@ -35,9 +36,12 @@ class CompletePage extends StatelessWidget {
                 ),
                 verticalSpace(v: 25),
                 //Description
-                Text(
-                  description,
-                  style: textTheme.headlineLarge,
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 20),
+                  child: Text(
+                    description,
+                    style: textTheme.headlineMedium,
+                  ),
                 ),
                 verticalSpace(v: 25),
               ],
@@ -54,7 +58,8 @@ class CompletePage extends StatelessWidget {
                       Radius.circular(10),
                     ),
                   )),
-              onPressed: () => Get.back(),
+              onPressed: () => Get.offNamedUntil(
+                  levelDetailPage, ModalRoute.withName(homePage)),
               child: const Text(
                 "CONTINUE",
                 style: TextStyle(

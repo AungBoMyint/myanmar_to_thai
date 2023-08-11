@@ -16,20 +16,8 @@ class QuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final QuestionController qController = Get.find();
-    String lesson = "";
-    String lessonImage = "";
-    if (qController.lesson.isEmpty) {
-      lesson = Get.arguments["lesson"] as String;
-      qController.lesson = lesson;
-    } else {
-      lesson = qController.lesson;
-    }
-    if (qController.lessonImage.isEmpty) {
-      lessonImage = Get.arguments["lesson_image"] as String;
-      qController.lessonImage = lessonImage;
-    } else {
-      lessonImage = qController.lessonImage;
-    }
+    final lesson = Get.arguments["lesson"] as String;
+    final lessonImage = Get.arguments["lesson_image"] as String;
     log("Title Image: $lessonImage");
     final textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
@@ -45,7 +33,7 @@ class QuestionPage extends StatelessWidget {
               backgroundColor: Color(0xffff98a2),
               child: CircleAvatar(
                 radius: 24,
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.white,
                 backgroundImage: AssetImage(
                   lessonImage,
                 ),
@@ -120,12 +108,16 @@ class QuestionPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "ฝนตกแต่เช้า",
+                                      question.questionContentID
+                                          .split("--")
+                                          .first,
                                       style: textTheme.displayMedium,
                                     ),
                                     verticalSpace(),
                                     Text(
-                                      "F̄n tk tæ̀ chêā",
+                                      question.questionContentID
+                                          .split("--")
+                                          .last,
                                       style: textTheme.displaySmall,
                                     ),
                                   ],
@@ -204,69 +196,6 @@ class QuestionPage extends StatelessWidget {
             );
           }),
         ],
-      ),
-      bottomNavigationBar: Container(
-        color: Colors.black,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Previous Button
-            Obx(() {
-              return qController.currentIndex.value != 0
-                  ? Expanded(
-                      flex: 3,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey.shade800,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            )),
-                        onPressed: () => qController.back(),
-                        child: const Text(
-                          "Back",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Expanded(flex: 0, child: Container());
-            }),
-            horizontalSpace(),
-            //Next
-            Obx(() {
-              return qController.currentIndex.value !=
-                      qController.questions.length - 1
-                  ? Expanded(
-                      flex: 7,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.pink,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            )),
-                        onPressed: () => qController.next(),
-                        child: Text(
-                          "Continue",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Expanded(flex: 0, child: Container());
-            }),
-          ],
-        ).withPadding(EdgeInsets.symmetric(
-          horizontal: 20,
-        )),
       ),
     );
   }

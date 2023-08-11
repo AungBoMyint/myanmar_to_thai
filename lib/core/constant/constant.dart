@@ -53,9 +53,9 @@ List<String> completeQuizTitleAlternatives = [
   'Quiz Master!'
 ];
 List<String> completeQuizDescriptionAlternatives = [
-  'You have completed the quiz.',
-  'You\'ve finished all the questions.',
-  'You\'ve answered all the questions.',
-  'You\'ve successfully completed the quiz.',
-  'You\'ve conquered all the questions.'
+  'You have successfully completed the entire quiz, answering all the questions and showcasing your knowledge. Your dedication and effort have paid off!',
+  'By answering all the questions in this quiz, you\'ve demonstrated your expertise and commitment to learning. Your achievement is commendable!',
+  'You\'ve journeyed through all the questions, displaying your understanding and proficiency in the subject matter. You\'ve reached the end with flying colors!',
+  'Your determination and knowledge shine as you conquer every question in the quiz. You\'ve completed the mission with excellence!',
+  'Through your consistent effort and accurate responses, you\'ve proven your mastery of the quiz content. Your accomplishment is truly impressive!'
 ];

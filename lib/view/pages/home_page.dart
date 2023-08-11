@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myanmar_to_thai/controller/data_controller.dart';
 
 import '../../controller/auth_controller.dart';
 import '../../core/constant/app_icon.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DataController dController = Get.find();
     final AuthController authController = Get.find();
     final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
@@ -135,14 +137,15 @@ class HomePage extends StatelessWidget {
                   return Wrap(
                     children: [
                       RowContainer(
-                        onTap: () => Get.toNamed(
-                          levelDetailPage,
-                          arguments: {
-                            "title": 'STUDY',
-                            "level": 'Beginner',
-                            "level_image": AppIcon.basic,
-                          },
-                        ),
+                        onTap: () {
+                          dController.setLevel("Beginner", AppIcon.basic);
+                          Get.toNamed(
+                            levelDetailPage,
+                          );
+                          Get.toNamed(
+                            levelDetailPage,
+                          );
+                        },
                         textTheme: textTheme,
                         iconImage: AppIcon.basic,
                         text: "Beginner",
@@ -273,13 +276,12 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final uiModel = phrasesUiModelList[index];
                     return InkWell(
-                      onTap: () => Get.toNamed(
-                        questionPage,
-                        arguments: {
-                          "lesson": uiModel.text,
-                          "lesson_image": uiModel.imageIcon,
-                        },
-                      ),
+                      onTap: () {
+                        dController.setLevel(uiModel.text, uiModel.imageIcon);
+                        Get.toNamed(
+                          levelDetailPage,
+                        );
+                      },
                       child: Container(
                         height: 65,
                         padding: const EdgeInsets.all(

@@ -13,9 +13,7 @@ class LessonDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LessonDetailController ldController = Get.find();
-    final title = Get.arguments["title"] as String;
-    final level = Get.arguments["level"] as String;
-    final levelImage = Get.arguments["level_image"] as String;
+
     final lesson = Get.arguments["lesson"] as String;
     final lessonImage = Get.arguments["lesson_image"] as String;
     final textTheme = Theme.of(context).textTheme;

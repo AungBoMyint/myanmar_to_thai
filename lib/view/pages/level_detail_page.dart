@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myanmar_to_thai/controller/data_controller.dart';
 import 'package:myanmar_to_thai/core/router/router.dart';
 
 import '../../core/constant/app_icon.dart';
@@ -12,9 +13,10 @@ class LevelDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = Get.arguments["title"] as String;
-    final level = Get.arguments["level"] as String;
-    final levelImage = Get.arguments["level_image"] as String;
+    final DataController dController = Get.find();
+    String level = dController.level;
+    String levelImage = dController.levelImage;
+
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +29,7 @@ class LevelDetailPage extends StatelessWidget {
               backgroundColor: Color(0xffff98a2),
               child: CircleAvatar(
                 radius: 24,
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.black,
                 backgroundImage: AssetImage(
                   levelImage,
                 ),
@@ -97,16 +99,21 @@ class LevelDetailPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final lesson = lessonList[index];
                   return InkWell(
-                    onTap: () => Get.toNamed(
-                      lessonDetailPage,
-                      arguments: {
-                        "title": title,
-                        "level": level,
-                        "level_image": levelImage,
-                        "lesson": lesson.title,
-                        "lesson_image": lesson.image,
-                      },
-                    ),
+                    onTap: () => index == 0
+                        ? Get.toNamed(
+                            lessonDetailPage,
+                            arguments: {
+                              "lesson": lesson.title,
+                              "lesson_image": lesson.image,
+                            },
+                          )
+                        : Get.toNamed(
+                            questionPage,
+                            arguments: {
+                              "lesson": lesson.title,
+                              "lesson_image": lesson.image,
+                            },
+                          ),
                     child: Card(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(

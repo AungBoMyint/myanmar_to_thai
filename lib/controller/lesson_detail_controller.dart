@@ -7,7 +7,6 @@ import 'package:myanmar_to_thai/model/remote/content.dart';
 
 class LessonDetailController extends GetxController {
   PageController pageController = PageController();
-
   late RxList<Content> contents = <Content>[].obs;
   var currentIndex = 0.obs;
 
