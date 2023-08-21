@@ -32,21 +32,23 @@ class AppTheme {
     ),
   );
   static ThemeData lightTheme() {
+    final colorCode = int.parse('1C4E8F', radix: 16);
+
     return ThemeData(
       scaffoldBackgroundColor: Colors.white /* const Color(0xFFF9F2F1) */,
-      primarySwatch: const MaterialColor(
-        0xFFFF5364,
+      primarySwatch: MaterialColor(
+        0xff1C4E8F,
         <int, Color>{
-          50: Color(0xffff98a2),
-          100: Color(0xffff8793),
-          200: Color(0xffff7583),
-          300: Color(0xffff6474),
-          400: Color(0xffff5364),
-          500: Color(0xffff5364),
-          600: Color(0xffe64b5a),
-          700: Color(0xffcc4250),
-          800: Color(0xffb33a46),
-          900: Color(0xff99323c),
+          50: Color(colorCode),
+          100: Color(colorCode),
+          200: Color(colorCode),
+          300: Color(colorCode),
+          400: Color(colorCode),
+          500: Color(colorCode),
+          600: Color(colorCode),
+          700: Color(colorCode),
+          800: Color(colorCode),
+          900: Color(colorCode),
         },
       ),
       brightness: Brightness.light,

@@ -1,14 +1,24 @@
-import 'dart:math';
+import 'dart:io';
+import 'dart:math' hide log;
+import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:myanmar_to_thai/controller/data_controller.dart';
 import 'package:myanmar_to_thai/core/constant/constant.dart';
-import 'package:myanmar_to_thai/core/mock/mock_data.dart';
 import 'package:myanmar_to_thai/core/router/router.dart';
-import 'package:myanmar_to_thai/model/remote/question.dart';
+import 'package:myanmar_to_thai/model/api/parser/question_all_parser.dart';
+import 'package:myanmar_to_thai/model/api/question_all.dart';
 import 'package:myanmar_to_thai/view/widgets/core.dart';
 
+import '../core/other/loading.dart';
+import '../model/api/question.dart';
+import '../service/api/client.dart';
+
 class QuestionController extends GetxController {
+  DataController dController = Get.find();
   PageController pageController = PageController();
   String lesson = "";
   String lessonImage = "";
@@ -16,6 +26,17 @@ class QuestionController extends GetxController {
   var currentIndex = 0.obs;
   var selectedAnswer = "".obs;
   var isPressed = false.obs;
+  var loading = false.obs;
+  var page = 0.obs;
+  var limit = 10.obs;
+  var total = 0.obs;
+  var goToComplete = false.obs;
+  AudioPlayer player = AudioPlayer();
+
+  Future<void> playNormal(String source) async {
+    await player.setPlaybackRate(1);
+    await player.play(UrlSource(source));
+  }
 
   bool hasPrevious() => currentIndex.value == 0 ? false : true;
   bool hasNext() => currentIndex.value == questions.length - 1 ? false : true;
@@ -68,12 +89,8 @@ class QuestionController extends GetxController {
               if (hasNext()) {
                 next();
               } else {
-                Get.toNamed(completePage, arguments: {
-                  "title": completeQuizTitleAlternatives[
-                      Random().nextInt(completeQuizTitleAlternatives.length)],
-                  "description": completeQuizDescriptionAlternatives[Random()
-                      .nextInt(completeQuizDescriptionAlternatives.length)],
-                });
+                goToComplete.value = true;
+                interstitialAd?.show();
               }
             },
             alternativeText: successAlternatives[
@@ -98,13 +115,31 @@ class QuestionController extends GetxController {
   }
 
   ///[index] is currentIndex
-  void next() {
-    currentIndex.value += 1;
-    pageController.animateToPage(
-      currentIndex.value,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeIn,
-    );
+  Future<void> next() async {
+    if (currentIndex.value == total.value) {
+      //That is all.Go back.
+      Get.back();
+    } else if (currentIndex.value < questions.length) {
+      currentIndex.value += 1;
+      pageController.animateToPage(
+        currentIndex.value,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeIn,
+      );
+    }
+
+    if ((currentIndex.value != total.value) &&
+        (currentIndex.value == questions.length - 1) &&
+        ((currentIndex.value + 1) != total.value)) {
+      //This index is last index - 1.so,we need to pre-getNext contents
+      getNextContents().then((value) {
+        pageController = PageController(initialPage: currentIndex.value);
+        log("=====Preloading finished: Total Questions=>${questions.length}");
+      }).onError((error, stackTrace) {
+        errorSnap("Something was wrong.Please back!");
+        Get.back();
+      });
+    }
   }
 
   ///[currentIndex.value] is currentcurrentIndex.value
@@ -117,9 +152,101 @@ class QuestionController extends GetxController {
     );
   }
 
+  Future<void> getNextContents() async {
+    page.value += 1;
+    loading.value = true;
+    final result = await RequestREST(
+      endPoint: question,
+      queryParameter: {
+        "classId": dController.selectedClass.value?.id,
+        "levelId": dController.selectedLevel.value?.id,
+        "lessonId": dController.selectedLesson.value?.id,
+        "page": page.value,
+        "limit": limit.value,
+      },
+    ).executeGet<QuestionAll>(QuestionAllParser());
+    loading.value = false;
+    questions.addAll(result?.data ?? []);
+  }
+
+  Future<void> getContents() async {
+    loading.value = true;
+    log("===ClassID:${dController.selectedClass.value?.id}\nLevelID:${dController.selectedLevel.value?.id}\nLessonID:${dController.selectedLesson.value?.id}");
+    final result = await RequestREST(
+      endPoint: question,
+      queryParameter: {
+        "classId": dController.selectedClass.value?.id,
+        "levelId": dController.selectedLevel.value?.id,
+        "lessonId": dController.selectedLesson.value?.id,
+      },
+    ).executeGet<QuestionAll>(QuestionAllParser());
+    loading.value = false;
+    questions.value = result?.data ?? [];
+    total.value = result?.count ?? 0;
+  }
+
+  //---------Ads Initialize
+  InterstitialAd? interstitialAd;
+
+  // TODO: replace this test ad unit with your own ad unit.
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/1033173712'
+      : 'ca-app-pub-3940256099942544/4411468910';
+
+  /// Loads an interstitial ad.
+  Future<void> loadAd() async {
+    await InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+                // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {},
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                  if (goToComplete.value) {
+                    Get.toNamed(completePage, arguments: {
+                      "title": completeQuizTitleAlternatives[Random()
+                          .nextInt(completeQuizTitleAlternatives.length)],
+                      "description": completeQuizDescriptionAlternatives[
+                          Random().nextInt(
+                              completeQuizDescriptionAlternatives.length)],
+                    });
+                  } else {
+                    Get.back();
+                  }
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+  //-----------------------------//
+
   @override
   void onInit() {
-    questions.value = questionList;
+    getContents();
+    loadAd();
     super.onInit();
   }
 }

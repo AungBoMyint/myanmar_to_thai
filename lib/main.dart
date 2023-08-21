@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
-import 'package:myanmar_to_thai/controller/lesson_detail_controller.dart';
 import 'controller/auth_controller.dart';
 import 'core/router/router.dart';
 import 'core/theme/app_theme.dart';
@@ -10,6 +10,8 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

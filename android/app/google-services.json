@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "244634423818",
-    "project_id": "myanmar-to-thai",
-    "storage_bucket": "myanmar-to-thai.appspot.com"
+    "project_number": "706754240103",
+    "project_id": "myanmar-to-thai-9946c",
+    "storage_bucket": "myanmar-to-thai-9946c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:244634423818:android:1b631b9fe92c374564c5f3",
+        "mobilesdk_app_id": "1:706754240103:android:e46c9ec4eb92b787cafec2",
         "android_client_info": {
-          "package_name": "com.example.myanmar_to_thai"
+          "package_name": "com.kzn.myanmartothai"
         }
       },
       "oauth_client": [
         {
-          "client_id": "244634423818-v6mm330drfcd681vr7op7tq42eu63ojd.apps.googleusercontent.com",
+          "client_id": "706754240103-reopgaqnl1rsk0ausii40huv82fl465r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxnpUHl_JXM0g2SGGy_2AQ3tlD470YxFM"
+          "current_key": "AIzaSyD7GtFm8nuISvkfb49E77OOHFgcYXDt0_s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "244634423818-fqmp085r07r48q03j9bkde79kpmhmmrr.apps.googleusercontent.com",
+              "client_id": "706754240103-reopgaqnl1rsk0ausii40huv82fl465r.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "244634423818-7dvtd8kgti6mi7u0d2vqhpt2lk6dis5r.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.myanmarToThai"
-              }
             }
           ]
         }

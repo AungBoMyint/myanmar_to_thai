@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 List<String> retryAlternatives = [
   "Oops, give it another shot!",
   "Not quite right, another attempt!",
@@ -60,5 +62,21 @@ List<String> completeQuizDescriptionAlternatives = [
   'Through your consistent effort and accurate responses, you\'ve proven your mastery of the quiz content. Your accomplishment is truly impressive!'
 ];
 
-const selectRactangle = "S-R";
-const selectCircle = "S-C";
+const selectRactangle = "Select-Rectangle";
+const selectCircle = "Select-Circle";
+
+const baseUrl = "https://mm-to-thai-idac.onrender.com/api";
+const auth = "/auth";
+const login = "/auth/login";
+const register = "/auth/register";
+const level = "/levels";
+const classscope = "/classscopes";
+const lesson = "/lessons";
+const content = "/contents";
+const question = "/questions";
+const List<Color> colors = [
+  Color(0XFFFF5364),
+  Color(0XFF2EB118),
+  Color(0XFF1843B1),
+  Color(0XFFB15818),
+];

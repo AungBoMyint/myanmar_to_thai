@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:myanmar_to_thai/model/remote/circle_position.dart';
 import 'package:myanmar_to_thai/model/remote/content.dart';
 import 'package:myanmar_to_thai/model/remote/question.dart';
@@ -120,6 +120,28 @@ final List<Question> questionList = [
     classLevelLesson: '',
   ),
 ];
+
+List<CirclePosition> circlePositions = [
+  CirclePosition(
+    left: 40,
+    top: 40,
+  ),
+  CirclePosition(
+    right: 40,
+    top: 40,
+  ),
+  CirclePosition(
+    left: 40,
+    bottom: 40,
+  ),
+  CirclePosition(
+    right: 40,
+    bottom: 40,
+  )
+];
+ */
+
+import '../../model/remote/circle_position.dart';
 
 List<CirclePosition> circlePositions = [
   CirclePosition(

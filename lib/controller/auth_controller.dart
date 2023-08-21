@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:myanmar_to_thai/core/other/loading.dart';
 import 'package:myanmar_to_thai/core/other/references.dart';
-
-import '../model/remote/auth_user.dart';
+import 'package:myanmar_to_thai/model/api/app_user.dart';
 
 class AuthController extends GetxController {
-  Rxn<AuthUser?> authUser = Rxn<AuthUser>(null);
+  Rxn<AppUser?> authUser = Rxn<AppUser>(null);
   final _firebaseAuth = FirebaseAuth.instance;
   StreamSubscription? userDocScubscription;
 
@@ -80,13 +79,13 @@ class AuthController extends GetxController {
         } else {
           log("User is not exist:$isExist");
           //if not exist nee to write new
-          authUser.value = AuthUser(
+          /*  authUser.value = AppUser(
             id: user.uid,
             userName: user.displayName ?? "Guest",
             email: user.email ?? "guest@gmail.com",
             photo: user.photoURL ?? "error",
             status: 0,
-          );
+          ); */
           await userDocument(user.uid).set(authUser.value!);
         }
         log('User is signed in!');

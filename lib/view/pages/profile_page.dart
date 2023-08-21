@@ -26,7 +26,7 @@ class ProfilePage extends StatelessWidget {
               radius: 100,
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
-                authController.authUser.value!.photo,
+                authController.authUser.value!.avatar ?? "",
               ),
             ),
             verticalSpace(),
@@ -34,7 +34,7 @@ class ProfilePage extends StatelessWidget {
                 style: textTheme.displayMedium),
             verticalSpace(v: 20),
             Obx(() {
-              final isAdmin = authController.authUser.value!.status > 0;
+              final isAdmin = authController.authUser.value!.role > 0;
               return isAdmin
                   ? Column(children: [
                       ManageItem(

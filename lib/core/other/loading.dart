@@ -25,3 +25,21 @@ showLoading() async {
 hideLoading() {
   Get.back();
 }
+
+successSnap(String title, {String? message}) {
+  Get.snackbar(
+    title,
+    message ?? "",
+    backgroundColor: Colors.green,
+    colorText: Colors.white,
+  );
+}
+
+errorSnap(String title, {String? message}) {
+  Get.snackbar(
+    title,
+    message ?? "",
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+  );
+}

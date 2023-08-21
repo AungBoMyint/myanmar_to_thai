@@ -28,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -47,30 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDxnpUHl_JXM0g2SGGy_2AQ3tlD470YxFM',
-    appId: '1:244634423818:android:1b631b9fe92c374564c5f3',
-    messagingSenderId: '244634423818',
-    projectId: 'myanmar-to-thai',
-    storageBucket: 'myanmar-to-thai.appspot.com',
+    apiKey: 'AIzaSyD7GtFm8nuISvkfb49E77OOHFgcYXDt0_s',
+    appId: '1:706754240103:android:e46c9ec4eb92b787cafec2',
+    messagingSenderId: '706754240103',
+    projectId: 'myanmar-to-thai-9946c',
+    storageBucket: 'myanmar-to-thai-9946c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDW_C5vIXbfnImqlQ19iUZ6DQShIiG3UE4',
-    appId: '1:244634423818:ios:3e2a1d87679a6edf64c5f3',
-    messagingSenderId: '244634423818',
-    projectId: 'myanmar-to-thai',
-    storageBucket: 'myanmar-to-thai.appspot.com',
-    iosClientId: '244634423818-7dvtd8kgti6mi7u0d2vqhpt2lk6dis5r.apps.googleusercontent.com',
-    iosBundleId: 'com.example.myanmarToThai',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDW_C5vIXbfnImqlQ19iUZ6DQShIiG3UE4',
-    appId: '1:244634423818:ios:3e2a1d87679a6edf64c5f3',
-    messagingSenderId: '244634423818',
-    projectId: 'myanmar-to-thai',
-    storageBucket: 'myanmar-to-thai.appspot.com',
-    iosClientId: '244634423818-7dvtd8kgti6mi7u0d2vqhpt2lk6dis5r.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBTUXc8Wot458HIlc-AAOkN3y3FaTc7hOs',
+    appId: '1:706754240103:ios:6297d76996cad777cafec2',
+    messagingSenderId: '706754240103',
+    projectId: 'myanmar-to-thai-9946c',
+    storageBucket: 'myanmar-to-thai-9946c.appspot.com',
+    iosClientId: '706754240103-ekaoaa0f4ripef2jsmu2gu2lb5cs7s1l.apps.googleusercontent.com',
     iosBundleId: 'com.example.myanmarToThai',
   );
 }

@@ -1,17 +1,41 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
-
+import 'package:myanmar_to_thai/core/constant/constant.dart';
+import 'package:myanmar_to_thai/model/api/class_scope.dart';
+import 'package:myanmar_to_thai/model/api/class_scope_all.dart';
+import 'package:myanmar_to_thai/model/api/level_all.dart';
+import 'package:myanmar_to_thai/model/api/parser/level_all_parser.dart';
 import '../../controller/auth_controller.dart';
 import '../../core/constant/app_icon.dart';
-import '../../core/mock/mock_data.dart';
 import '../../core/router/router.dart';
+import '../../model/api/parser/class_scope_all_parser.dart';
+import '../../service/api/client.dart';
 import '../widgets/core.dart';
-import 'level_detail_page.dart';
-import 'profile_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<ClassScopeAll?>? classScopeFuture;
+
+  @override
+  void initState() {
+    getClassScope();
+    super.initState();
+  }
+
+  Future<void> getClassScope() async {
+    classScopeFuture = RequestREST(
+      endPoint: classscope,
+    ).executeGet<ClassScopeAll>(ClassScopeAllParser());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +49,16 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.only(
             left: 20,
           ),
-          child: Container(
+          child: CircleAvatar(
+            radius: 18,
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Image.asset(
+              AppIcon.book,
+              /*  width: 35,
+              height: 35, */
+              fit: BoxFit.fill,
+            ),
+          ), /* Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
@@ -39,15 +72,15 @@ class HomePage extends StatelessWidget {
               width: 15,
               height: 15,
             ),
-          ),
+          ), */
         ),
         leadingWidth: 60,
         title: const Text(
-          "Myanmar To Thai",
+          "MyanThai LearnUp by KZN",
         ),
         centerTitle: false,
         titleTextStyle: textTheme.displayMedium,
-        actions: [
+        /*   actions: [
           IconButton(
             onPressed: () {
               //first check user is auth or not
@@ -110,174 +143,97 @@ class HomePage extends StatelessWidget {
             ),
           )
         ],
+       */
       ),
-      body: ListView(
-        /*  shrinkWrap: true, */
-        physics: const BouncingScrollPhysics(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          setState(() {
+            getClassScope();
+          });
+          return Future.delayed(Duration.zero);
+        },
+        child: FirebaseSnapHelper<ClassScopeAll?>(
+            future: classScopeFuture!,
+            onSuccess: (classScopeAll) {
+              return ListView.separated(
+                /*  shrinkWrap: true, */
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: classScopeAll?.data.length ?? 0,
+                separatorBuilder: (context, index) => verticalSpace(),
+                itemBuilder: (context, index) {
+                  final classScope = classScopeAll?.data[index];
+                  return [
+                    FirstStyleWidget(
+                        textTheme: textTheme, classScope: classScope),
+                    SecondStyleWidget(
+                        size: size,
+                        textTheme: textTheme,
+                        classScope: classScope),
+                    ThirdStyleWidget(
+                        size: size,
+                        textTheme: textTheme,
+                        classScope: classScope)
+                  ][index % 3];
+                },
+              );
+            }),
+      ),
+    );
+  }
+}
+
+class ThirdStyleWidget extends StatelessWidget {
+  const ThirdStyleWidget({
+    super.key,
+    required this.size,
+    required this.textTheme,
+    required this.classScope,
+  });
+
+  final Size size;
+  final TextTheme textTheme;
+  final ClassScope? classScope;
+
+  @override
+  Widget build(BuildContext context) {
+    final DataController dController = Get.find();
+    return Container(
+      /*  height: 150, */
+      width: size.width,
+      color: Colors.white,
+      padding: const EdgeInsets.only(
+        left: 25,
+        right: 25,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           verticalSpace(),
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.only(
-              top: 15,
-              bottom: 15,
-              left: 25,
-              right: 25,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //STUDY
-                Text(
-                  "STUDY",
-                  style: textTheme.headlineMedium,
-                ),
-
-                LayoutBuilder(builder: (context, constrains) {
-                  return Wrap(
-                    children: [
-                      RowContainer(
-                        onTap: () {
-                          dController.setLevel("Beginner", AppIcon.basic);
-                          Get.toNamed(
-                            levelDetailPage,
-                          );
-                          Get.toNamed(
-                            levelDetailPage,
-                          );
-                        },
-                        textTheme: textTheme,
-                        iconImage: AppIcon.basic,
-                        text: "Beginner",
-                        width: constrains.maxWidth * 0.45,
-                      ),
-                      horizontalSpace(),
-                      RowContainer(
-                        textTheme: textTheme,
-                        iconImage: AppIcon.travellerBasic,
-                        text: "Traveler Basics",
-                        width: constrains.maxWidth * 0.5,
-                      ),
-                      verticalSpace(),
-                      RowContainer(
-                        textTheme: textTheme,
-                        iconImage: AppIcon.travellerAdvanced,
-                        text: "Traveler Advanced",
-                        width: constrains.maxWidth * 0.55,
-                      ),
-                      horizontalSpace(),
-                      RowContainer(
-                        textTheme: textTheme,
-                        iconImage: AppIcon.expat,
-                        text: "Expat",
-                        width: constrains.maxWidth * 0.38,
-                      ),
-                    ],
-                  );
-                }),
-              ],
-            ),
+          Text(
+            classScope?.name ?? "",
+            style: textTheme.headlineMedium,
           ),
           verticalSpace(),
-          //PHRASES
-          Container(
-            /*  height: 150, */
-            width: size.width,
-            color: Colors.white,
-            padding: const EdgeInsets.only(
-              top: 15,
-              bottom: 15,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 25),
-                  child: Text(
-                    "PHRASES",
-                    style: textTheme.headlineMedium,
-                  ),
-                ),
-                verticalSpace(),
-                SizedBox(
-                  height: 120,
-                  child: ListView.separated(
-                    itemCount: phrasesUiModelList.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    separatorBuilder: (context, index) => horizontalSpace(),
-                    itemBuilder: (context, index) {
-                      final uiModel = phrasesUiModelList[index];
-                      return Padding(
-                        padding: EdgeInsets.only(left: index == 0 ? 25 : 0),
-                        child: SizedBox(
-                          width: size.width * 0.35,
-                          child: Card(
-                            color: uiModel.color,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  15,
-                                ),
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  uiModel.imageIcon,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                verticalSpace(),
-                                Text(
-                                  uiModel.text,
-                                  style: textTheme.headlineSmall?.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          verticalSpace(),
-          //QUIZ
-          Container(
-            /*  height: 150, */
-            width: size.width,
-            color: Colors.white,
-            padding: const EdgeInsets.only(
-              left: 25,
-              right: 25,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalSpace(),
-                Text(
-                  "QUIZ",
-                  style: textTheme.headlineMedium,
-                ),
-                verticalSpace(),
-                ListView.separated(
+          FirebaseSnapHelper<LevelAll?>(
+              future: RequestREST(
+                endPoint: level,
+                queryParameter: {
+                  "classId": classScope?.id,
+                },
+              ).executeGet<LevelAll>(LevelAllParser()),
+              onSuccess: (levelAll) {
+                return ListView.separated(
                   shrinkWrap: true,
                   primary: false,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: phrasesUiModelList.length,
+                  itemCount: levelAll?.data.length ?? 0,
                   separatorBuilder: (context, index) => verticalSpace(),
                   itemBuilder: (context, index) {
-                    final uiModel = phrasesUiModelList[index];
+                    final level = levelAll?.data[index];
                     return InkWell(
                       onTap: () {
-                        dController.setLevel(uiModel.text, uiModel.imageIcon);
+                        dController.setClassLevel(
+                            classScope: classScope!, level: level!);
                         Get.toNamed(
                           levelDetailPage,
                         );
@@ -288,7 +244,7 @@ class HomePage extends StatelessWidget {
                           8,
                         ),
                         decoration: BoxDecoration(
-                          color: uiModel.color,
+                          color: colors[index % 4],
                           borderRadius: const BorderRadius.all(
                             Radius.circular(
                               15,
@@ -300,17 +256,25 @@ class HomePage extends StatelessWidget {
                           children: [
                             horizontalSpace(),
                             //Icon
-                            Image.asset(
-                              uiModel.imageIcon,
-                              width: 35,
-                              height: 35,
+                            Image.network(
+                              level?.image ?? "",
+                              width: 55,
+                              height: 55,
+                              fit: BoxFit.cover,
+                              frameBuilder: (c, w, _, __) {
+                                return ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                  child: w,
+                                );
+                              },
                             ),
                             //Label Text
                             horizontalSpace(
                               v: 15,
                             ),
                             Text(
-                              uiModel.text,
+                              level?.name ?? "",
                               style: textTheme.headlineSmall?.copyWith(
                                 color: Colors.white,
                               ),
@@ -320,10 +284,191 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                ),
-              ],
+                );
+              }),
+          verticalSpace(),
+        ],
+      ),
+    );
+  }
+}
+
+class SecondStyleWidget extends StatelessWidget {
+  const SecondStyleWidget({
+    super.key,
+    required this.size,
+    required this.textTheme,
+    required this.classScope,
+  });
+
+  final Size size;
+  final TextTheme textTheme;
+  final ClassScope? classScope;
+
+  @override
+  Widget build(BuildContext context) {
+    final DataController dController = Get.find();
+    return Container(
+      /*  height: 150, */
+      width: size.width,
+      color: Colors.white,
+      padding: const EdgeInsets.only(
+        top: 15,
+        bottom: 15,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25),
+            child: Text(
+              classScope?.name ?? "",
+              style: textTheme.headlineMedium,
             ),
           ),
+          verticalSpace(),
+          FirebaseSnapHelper<LevelAll?>(
+              future: RequestREST(
+                endPoint: level,
+                queryParameter: {
+                  "classId": classScope?.id,
+                },
+              ).executeGet<LevelAll>(LevelAllParser()),
+              onSuccess: (levelAll) {
+                return SizedBox(
+                  height: 120,
+                  child: ListView.separated(
+                    itemCount: levelAll?.data.length ?? 0,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    separatorBuilder: (context, index) => horizontalSpace(),
+                    itemBuilder: (context, index) {
+                      final level = levelAll?.data[index];
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 25 : 0),
+                        child: SizedBox(
+                          width: size.width * 0.35,
+                          child: InkWell(
+                            onTap: () {
+                              dController.setClassLevel(
+                                  classScope: classScope!, level: level!);
+                              Get.toNamed(
+                                levelDetailPage,
+                              );
+                            },
+                            child: Card(
+                              color: colors[index % 4],
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    15,
+                                  ),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.network(
+                                    level?.image ?? "",
+                                    width: 55,
+                                    height: 55,
+                                    fit: BoxFit.cover,
+                                    frameBuilder: (c, w, _, __) {
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        child: w,
+                                      );
+                                    },
+                                  ),
+                                  verticalSpace(),
+                                  Text(
+                                    level?.name ?? "",
+                                    style: textTheme.headlineSmall?.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
+        ],
+      ),
+    );
+  }
+}
+
+class FirstStyleWidget extends StatelessWidget {
+  const FirstStyleWidget({
+    super.key,
+    required this.textTheme,
+    required this.classScope,
+  });
+
+  final TextTheme textTheme;
+  final ClassScope? classScope;
+
+  @override
+  Widget build(BuildContext context) {
+    final DataController dController = Get.find();
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(
+        top: 15,
+        bottom: 15,
+        left: 25,
+        right: 25,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //STUDY
+          Text(
+            classScope?.name ?? "",
+            style: textTheme.headlineMedium,
+          ),
+
+          FirebaseSnapHelper<LevelAll?>(
+              future: RequestREST(
+                endPoint: level,
+                queryParameter: {
+                  "classId": classScope?.id,
+                },
+              ).executeGet<LevelAll>(LevelAllParser()),
+              onSuccess: (levelAll) {
+                return LayoutBuilder(builder: (context, constrains) {
+                  return Wrap(
+                    children: levelAll?.data
+                            .map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: RowContainer(
+                                  onTap: () {
+                                    dController.setClassLevel(
+                                        classScope: classScope!, level: e);
+                                    Get.toNamed(
+                                      levelDetailPage,
+                                    );
+                                  },
+                                  textTheme: textTheme,
+                                  iconImage: e.image ?? "",
+                                  text: e.name,
+                                  width: constrains.maxWidth * 0.45,
+                                ),
+                              ),
+                            )
+                            .toList() ??
+                        [Container()],
+                  );
+                });
+              }),
         ],
       ),
     );
@@ -423,18 +568,29 @@ class RowContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //Icon
-              Image.asset(
+              Image.network(
                 iconImage,
-                width: 30,
-                height: 30,
+                width: 55,
+                height: 55,
+                fit: BoxFit.cover,
+                frameBuilder: (c, w, _, __) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    child: w,
+                  );
+                },
               ),
               //Label Text
               horizontalSpace(
-                v: 15,
+                v: 10,
               ),
-              Text(
-                text,
-                style: textTheme.headlineSmall,
+              Expanded(
+                child: Text(
+                  text,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.headlineSmall,
+                ),
               ),
             ],
           ),

@@ -1,19 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myanmar_to_thai/model/api/app_user.dart';
 
-import '../../model/lesson_ui_model.dart';
-import '../../model/remote/auth_user.dart';
-import '../../model/remote/content.dart';
-import '../../model/remote/lesson.dart';
-
-CollectionReference<AuthUser> userCollection() =>
-    FirebaseFirestore.instance.collection("users").withConverter<AuthUser>(
-          fromFirestore: (snap, __) => AuthUser.fromJson(snap.data()!),
+CollectionReference<AppUser> userCollection() =>
+    FirebaseFirestore.instance.collection("users").withConverter<AppUser>(
+          fromFirestore: (snap, __) => AppUser.fromJson(snap.data()!),
           toFirestore: (auth, __) => auth.toJson(),
         );
 
-DocumentReference<AuthUser> userDocument(String id) => userCollection().doc(id);
+DocumentReference<AppUser> userDocument(String id) => userCollection().doc(id);
 
-CollectionReference<Lesson> lessonCollection() =>
+/* CollectionReference<Lesson> lessonCollection() =>
     FirebaseFirestore.instance.collection("lessons").withConverter<Lesson>(
           fromFirestore: (snap, __) => Lesson.fromJson(snap.data()!),
           toFirestore: (lesson, __) => lesson.toJson(),
@@ -30,3 +26,4 @@ CollectionReference<Content> contentCollection() =>
 
 DocumentReference<Content> contentDocument(String id) =>
     contentCollection().doc(id);
+ */
