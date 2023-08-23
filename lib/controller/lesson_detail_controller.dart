@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
@@ -6,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
 import 'package:myanmar_to_thai/core/other/loading.dart';
-import 'package:myanmar_to_thai/model/api/lesson_quiz.dart';
-
 import '../core/constant/constant.dart';
 import '../model/api/content.dart';
 import '../model/api/content_all.dart';
@@ -19,23 +18,54 @@ class LessonDetailController extends GetxController {
   PageController pageController = PageController();
   late RxList<Content> contents = <Content>[].obs;
   var currentIndex = 0.obs;
-  AudioPlayer player = AudioPlayer();
+  StreamSubscription<PlayerState>? playerStateStreams;
+  var playerState = PlayerState.paused.obs;
+  AudioPlayer? player;
   var loading = false.obs;
   var page = 0.obs;
   var limit = 10.obs;
   var total = 0.obs;
+  var playerLoading = false.obs;
 
   bool hasPrevious() => currentIndex.value == 0 ? false : true;
   bool hasNext() => currentIndex.value == contents.length - 1 ? false : true;
 
   Future<void> playNormal(String source) async {
-    await player.setPlaybackRate(1);
-    await player.play(UrlSource(source));
+    if (playerLoading.value) return;
+    playerLoading.value = true;
+    if (!(player == null)) pausePlayer();
+    player = null;
+    player = AudioPlayer();
+    await player?.setPlaybackRate(1);
+    await player?.play(UrlSource(source));
+    if (!(playerStateStreams == null)) playerStateStreams?.cancel();
+    playerStateStreams = player?.onPlayerStateChanged.listen((event) {
+      playerState.value = event;
+    });
+    playerLoading.value = false;
   }
 
   Future<void> playSnail(String source) async {
-    await player.setPlaybackRate(0.5);
-    await player.play(UrlSource(source));
+    if (playerLoading.value) return;
+    playerLoading.value = true;
+    if (!(player == null)) pausePlayer();
+    player = null;
+    player = AudioPlayer();
+    await player?.setPlaybackRate(0.5);
+    await player?.play(UrlSource(source));
+    if (!(playerStateStreams == null)) playerStateStreams?.cancel();
+    playerStateStreams = player?.onPlayerStateChanged.listen((event) {
+      playerState.value = event;
+    });
+    playerLoading.value = false;
+  }
+
+  void pausePlayer() {
+    try {
+      player?.pause();
+    } catch (e) {
+      log("========Player pause error: $e");
+    }
   }
 
   ///[index] is currentIndex
@@ -44,6 +74,7 @@ class LessonDetailController extends GetxController {
       //That is all.Go back.
       Get.back();
     } else if (currentIndex.value < contents.length) {
+      pausePlayer();
       currentIndex.value += 1;
       pageController.animateToPage(
         currentIndex.value,
@@ -68,6 +99,7 @@ class LessonDetailController extends GetxController {
 
   ///[currentIndex.value] is currentcurrentIndex.value
   void back() {
+    pausePlayer();
     currentIndex.value -= 1;
     pageController.animateToPage(
       currentIndex.value,
@@ -78,7 +110,8 @@ class LessonDetailController extends GetxController {
 
   @override
   void dispose() {
-    player.dispose();
+    pausePlayer();
+    player?.dispose();
     super.dispose();
   }
 
@@ -117,11 +150,15 @@ class LessonDetailController extends GetxController {
 
   //---------Ads Initialize
   InterstitialAd? interstitialAd;
+  Rxn<BannerAd> bannerAd = Rxn<BannerAd>();
 
   // TODO: replace this test ad unit with your own ad unit.
   final adUnitId = Platform.isAndroid
       ? 'ca-app-pub-3940256099942544/1033173712'
       : 'ca-app-pub-3940256099942544/4411468910';
+  final bannerAdUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/6300978111'
+      : 'ca-app-pub-3940256099942544/2934735716';
 
   /// Loads an interstitial ad.
   Future<void> loadAd() async {
@@ -162,12 +199,44 @@ class LessonDetailController extends GetxController {
         ));
   }
 
+  Future<void> loadBannerAds() async {
+    bannerAd.value = BannerAd(
+      adUnitId: bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
   //-----------------------------//
 
   @override
   void onInit() {
     getContents();
     loadAd();
+    loadBannerAds();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    pausePlayer();
+    super.onClose();
+  }
+
+  @override
+  InternalFinalCallback<void> get onDelete {
+    pausePlayer();
+    return super.onDelete;
   }
 }

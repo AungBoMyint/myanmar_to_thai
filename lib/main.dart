@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
-import 'controller/auth_controller.dart';
 import 'core/router/router.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
@@ -24,11 +23,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(AuthController());
     Get.put(DataController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'MyanThai LearnUp by KZN',
       theme: AppTheme.lightTheme(),
       initialRoute: homePage,
       getPages: routes,

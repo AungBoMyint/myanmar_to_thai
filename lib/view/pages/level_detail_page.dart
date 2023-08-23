@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
+import 'package:myanmar_to_thai/controller/level_controller.dart';
 import 'package:myanmar_to_thai/core/constant/constant.dart';
 import 'package:myanmar_to_thai/core/router/router.dart';
 import 'package:myanmar_to_thai/model/api/lesson_all.dart';
 import 'package:myanmar_to_thai/model/api/lesson_quiz.dart';
+import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
+import 'package:myanmar_to_thai/view/widgets/shimmer_loading.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
@@ -46,6 +49,7 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final LevelController levelController = Get.find();
     String level = dController.selectedLevel.value?.name ?? "";
     String levelImage = dController.selectedLevel.value?.image ?? "";
     final textTheme = Theme.of(context).textTheme;
@@ -88,93 +92,119 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
           ),
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: () {
-          setState(() {
-            getLessons();
-          });
-          return Future.delayed(Duration.zero);
-        },
-        child: FirebaseSnapHelper<LessonAll?>(
-            future: lessonAllFuture!,
-            onSuccess: (lessonAll) {
-              return Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
-                child: GridView.builder(
-                  itemCount: lessonAll?.data.length ?? 0,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.9,
-                  ),
-                  itemBuilder: (context, index) {
-                    final lesson = lessonAll?.data[index];
-                    return InkWell(
-                      onTap: () {
-                        dController.setSelectedLesson(lesson!);
-                        if (lesson.forQuestion == true) {
-                          Get.toNamed(questionPage);
-                        } else {
-                          Get.toNamed(lessonDetailPage);
-                        }
-                      },
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        log("===Height: ${constraints.maxHeight}");
-                        log("===Width: ${constraints.maxWidth}");
-                        return Card(
-                          color: Colors.white,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  15,
-                                ),
-                              ),
-                              side: BorderSide(
-                                color: Colors.grey,
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.network(
-                                  lesson?.image ?? "",
-                                  width: constraints.maxWidth,
-                                  height: constraints.maxHeight * 0.5,
-                                  fit: BoxFit.cover,
-                                  frameBuilder: (c, w, _, __) {
-                                    return ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
+      body: ConnectivityPage(
+        connected: RefreshIndicator(
+          onRefresh: () {
+            setState(() {
+              getLessons();
+            });
+            return Future.delayed(Duration.zero);
+          },
+          child: Stack(
+            children: [
+              FirebaseSnapHelper<LessonAll?>(
+                  future: lessonAllFuture!,
+                  onLoading: () => const LevelDetailShimmerLoading(),
+                  onSuccess: (lessonAll) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                      ),
+                      child: GridView.builder(
+                        itemCount: lessonAll?.data.length ?? 0,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 0.9,
+                        ),
+                        itemBuilder: (context, index) {
+                          final lesson = lessonAll?.data[index];
+                          return InkWell(
+                            onTap: () {
+                              dController.setSelectedLesson(lesson!);
+                              if (lesson.forQuestion == true) {
+                                Get.toNamed(questionPage);
+                              } else {
+                                Get.toNamed(lessonDetailPage);
+                              }
+                            },
+                            child:
+                                LayoutBuilder(builder: (context, constraints) {
+                              log("===Height: ${constraints.maxHeight}");
+                              log("===Width: ${constraints.maxWidth}");
+                              return Card(
+                                color: Colors.white,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                        15,
                                       ),
-                                      child: w,
-                                    );
-                                  },
-                                ),
-                                verticalSpace(),
-                                Expanded(
-                                  child: Text(
-                                    lesson?.name ?? "",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: textTheme.headlineSmall,
+                                    ),
+                                    side: BorderSide(
+                                      color: Colors.grey,
+                                    )),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Image.network(
+                                        lesson?.image ?? "",
+                                        width: constraints.maxWidth,
+                                        height: constraints.maxHeight * 0.5,
+                                        fit: BoxFit.cover,
+                                        frameBuilder: (c, w, _, __) {
+                                          return ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            child: w,
+                                          );
+                                        },
+                                      ),
+                                      verticalSpace(),
+                                      Expanded(
+                                        child: Text(
+                                          lesson?.name ?? "",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: textTheme.headlineSmall,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                              );
+                            }),
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
-              );
-            }),
+                  }),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Obx(() {
+                  final bannerAd = levelController.bannerAd.value;
+                  if (!(bannerAd == null)) {
+                    return SafeArea(
+                      child: SizedBox(
+                        width: bannerAd.size.width.toDouble(),
+                        height: bannerAd.size.height.toDouble(),
+                        child: AdWidget(ad: bannerAd),
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                }),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

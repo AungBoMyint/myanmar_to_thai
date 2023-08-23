@@ -1,4 +1,5 @@
 class AppIcon {
+  static const String noInternet = "assets/no-connection.png";
   static const String book = "assets/logo.png";
   static const String oneTwoThree = "assets/123.png";
   static const String basic = "assets/basic.png";

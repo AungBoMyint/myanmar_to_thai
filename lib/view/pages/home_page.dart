@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
@@ -8,7 +6,9 @@ import 'package:myanmar_to_thai/model/api/class_scope.dart';
 import 'package:myanmar_to_thai/model/api/class_scope_all.dart';
 import 'package:myanmar_to_thai/model/api/level_all.dart';
 import 'package:myanmar_to_thai/model/api/parser/level_all_parser.dart';
-import '../../controller/auth_controller.dart';
+import 'package:myanmar_to_thai/view/pages/connection_error_page.dart';
+import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
+import 'package:myanmar_to_thai/view/widgets/shimmer_loading.dart';
 import '../../core/constant/app_icon.dart';
 import '../../core/router/router.dart';
 import '../../model/api/parser/class_scope_all_parser.dart';
@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final DataController dController = Get.find();
-    final AuthController authController = Get.find();
     final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -54,25 +53,9 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Theme.of(context).primaryColor,
             child: Image.asset(
               AppIcon.book,
-              /*  width: 35,
-              height: 35, */
               fit: BoxFit.fill,
             ),
-          ), /* Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              border: Border.all(
-                color: Theme.of(context).primaryColor,
-                width: 2,
-              ),
-            ),
-            child: Image.asset(
-              AppIcon.book,
-              width: 15,
-              height: 15,
-            ),
-          ), */
+          ),
         ),
         leadingWidth: 60,
         title: const Text(
@@ -80,103 +63,42 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: false,
         titleTextStyle: textTheme.displayMedium,
-        /*   actions: [
-          IconButton(
-            onPressed: () {
-              //first check user is auth or not
-              if (!authController.checkUserAuth()) {
-                Get.dialog(
-                  Center(
-                    child: SizedBox(
-                      height: 180,
-                      width: size.width * 0.6,
-                      child: Card(
-                          child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 25,
-                          right: 25,
-                          top: 10,
-                          bottom: 10,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //Title
-                            Text(
-                              "Sign In Option",
-                              style: textTheme.displayMedium,
-                            ),
-                            verticalSpace(v: 20),
-                            SignInButton(
-                              textTheme: textTheme,
-                              onPressed: () {
-                                Get.back();
-                                authController.signInWithGoogle(profilePage);
-                              },
-                              color: Color(0xFF2EB118),
-                              text: "Google",
-                              imageIcon: AppIcon.google,
-                            ),
-                            verticalSpace(v: 2),
-                            SignInButton(
-                              textTheme: textTheme,
-                              onPressed: () {},
-                              color: Color(0xFFD68BE3),
-                              text: "Guest",
-                              imageIcon: AppIcon.guest,
-                            ),
-                          ],
-                        ),
-                      )),
-                    ),
-                  ),
-                  barrierColor: Colors.transparent,
-                );
-              } else {
-                Get.toNamed(profilePage);
-              }
-            },
-            icon: Image.asset(
-              AppIcon.user,
-              width: 25,
-              height: 25,
-            ),
-          )
-        ],
-       */
       ),
-      body: RefreshIndicator(
-        onRefresh: () {
-          setState(() {
-            getClassScope();
-          });
-          return Future.delayed(Duration.zero);
-        },
-        child: FirebaseSnapHelper<ClassScopeAll?>(
-            future: classScopeFuture!,
-            onSuccess: (classScopeAll) {
-              return ListView.separated(
-                /*  shrinkWrap: true, */
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: classScopeAll?.data.length ?? 0,
-                separatorBuilder: (context, index) => verticalSpace(),
-                itemBuilder: (context, index) {
-                  final classScope = classScopeAll?.data[index];
-                  return [
-                    FirstStyleWidget(
-                        textTheme: textTheme, classScope: classScope),
-                    SecondStyleWidget(
-                        size: size,
-                        textTheme: textTheme,
-                        classScope: classScope),
-                    ThirdStyleWidget(
-                        size: size,
-                        textTheme: textTheme,
-                        classScope: classScope)
-                  ][index % 3];
-                },
-              );
-            }),
+      body: ConnectivityPage(
+        connected: RefreshIndicator(
+          onRefresh: () {
+            setState(() {
+              getClassScope();
+            });
+            return Future.delayed(Duration.zero);
+          },
+          child: FirebaseSnapHelper<ClassScopeAll?>(
+              future: classScopeFuture!,
+              onLoading: () => const HomeShimmerLoading(),
+              onSuccess: (classScopeAll) {
+                return ListView.separated(
+                  /*  shrinkWrap: true, */
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: classScopeAll?.data.length ?? 0,
+                  separatorBuilder: (context, index) => verticalSpace(),
+                  itemBuilder: (context, index) {
+                    final classScope = classScopeAll?.data[index];
+                    return [
+                      FirstStyleWidget(
+                          textTheme: textTheme, classScope: classScope),
+                      SecondStyleWidget(
+                          size: size,
+                          textTheme: textTheme,
+                          classScope: classScope),
+                      ThirdStyleWidget(
+                          size: size,
+                          textTheme: textTheme,
+                          classScope: classScope)
+                    ][index % 3];
+                  },
+                );
+              }),
+        ),
       ),
     );
   }
@@ -215,6 +137,7 @@ class ThirdStyleWidget extends StatelessWidget {
           ),
           verticalSpace(),
           FirebaseSnapHelper<LevelAll?>(
+              onLoading: () => const ThirdStyleShimmerLoading(isHome: false),
               future: RequestREST(
                 endPoint: level,
                 queryParameter: {
@@ -328,6 +251,7 @@ class SecondStyleWidget extends StatelessWidget {
           ),
           verticalSpace(),
           FirebaseSnapHelper<LevelAll?>(
+              onLoading: () => const SecondStyleShimmerLoading(isHome: false),
               future: RequestREST(
                 endPoint: level,
                 queryParameter: {
@@ -436,6 +360,7 @@ class FirstStyleWidget extends StatelessWidget {
           ),
 
           FirebaseSnapHelper<LevelAll?>(
+              onLoading: () => const FirstStyleShimmerLoading(isHome: false),
               future: RequestREST(
                 endPoint: level,
                 queryParameter: {
@@ -522,6 +447,62 @@ class SignInButton extends StatelessWidget {
               height: 20,
             )
           ]),
+    );
+  }
+}
+
+class RowContainerShimmerLoading extends StatelessWidget {
+  const RowContainerShimmerLoading({
+    super.key,
+    required this.width,
+  });
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 50,
+          width: width,
+          padding: const EdgeInsets.all(
+            8,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).primaryColor,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(
+                15,
+              ),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              //Icon
+              Container(
+                color: Colors.white,
+                width: 55,
+                height: 55,
+              ),
+              //Label Text
+              horizontalSpace(
+                v: 10,
+              ),
+              Container(
+                width: 50,
+                height: 20,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
