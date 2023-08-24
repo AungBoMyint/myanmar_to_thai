@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../core/constant/constant.dart';
 
@@ -94,7 +95,9 @@ class TryAgainOrContinueWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
     return Container(
-      height: size.height * 0.15,
+      height: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+          ? size.height * 0.1
+          : size.height * 0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

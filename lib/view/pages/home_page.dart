@@ -9,6 +9,7 @@ import 'package:myanmar_to_thai/model/api/parser/level_all_parser.dart';
 import 'package:myanmar_to_thai/view/pages/connection_error_page.dart';
 import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
 import 'package:myanmar_to_thai/view/widgets/shimmer_loading.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../core/constant/app_icon.dart';
 import '../../core/router/router.dart';
 import '../../model/api/parser/class_scope_all_parser.dart';
@@ -162,7 +163,10 @@ class ThirdStyleWidget extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        height: 65,
+                        height:
+                            ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+                                ? 80
+                                : 65,
                         padding: const EdgeInsets.all(
                           8,
                         ),
@@ -271,7 +275,10 @@ class SecondStyleWidget extends StatelessWidget {
                       return Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 25 : 0),
                         child: SizedBox(
-                          width: size.width * 0.35,
+                          width: ResponsiveBreakpoints.of(context)
+                                  .largerThan(MOBILE)
+                              ? size.width * 0.2
+                              : size.width * 0.35,
                           child: InkWell(
                             onTap: () {
                               dController.setClassLevel(
@@ -385,7 +392,10 @@ class FirstStyleWidget extends StatelessWidget {
                                   textTheme: textTheme,
                                   iconImage: e.image ?? "",
                                   text: e.name,
-                                  width: constrains.maxWidth * 0.45,
+                                  width: ResponsiveBreakpoints.of(context)
+                                          .largerThan(MOBILE)
+                                      ? constrains.maxWidth * 0.2
+                                      : constrains.maxWidth * 0.45,
                                 ),
                               ),
                             )
@@ -481,25 +491,28 @@ class RowContainerShimmerLoading extends StatelessWidget {
               ),
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              //Icon
-              Container(
-                color: Colors.white,
-                width: 55,
-                height: 55,
-              ),
-              //Label Text
-              horizontalSpace(
-                v: 10,
-              ),
-              Container(
-                width: 50,
-                height: 20,
-                color: Colors.white,
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //Icon
+                Container(
+                  color: Colors.white,
+                  width: 55,
+                  height: 55,
+                ),
+                //Label Text
+                horizontalSpace(
+                  v: 10,
+                ),
+                Container(
+                  width: 50,
+                  height: 20,
+                  color: Colors.white,
+                ),
+              ],
+            ),
           ),
         ),
       ),

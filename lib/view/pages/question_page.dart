@@ -12,6 +12,7 @@ import 'package:myanmar_to_thai/core/constant/constant.dart';
 import 'package:myanmar_to_thai/core/mock/mock_data.dart';
 import 'package:myanmar_to_thai/model/remote/circle_position.dart';
 import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../../model/api/question.dart';
@@ -151,7 +152,11 @@ class QuestionPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                verticalSpace(v: 45),
+                                verticalSpace(
+                                    v: ResponsiveBreakpoints.of(context)
+                                            .largerThan(MOBILE)
+                                        ? 80
+                                        : 45),
                                 //Command Text
                                 Text(
                                   "Select the correct answer",
@@ -162,7 +167,10 @@ class QuestionPage extends StatelessWidget {
                                 verticalSpace(),
                                 //Choice List
                                 Container(
-                                  height: size.height * 0.4,
+                                  height: ResponsiveBreakpoints.of(context)
+                                          .largerThan(MOBILE)
+                                      ? size.height * 0.5
+                                      : size.height * 0.4,
                                   child: question.qestionType == selectRactangle
                                       ? SelectRectangleWidget(
                                           question: question,

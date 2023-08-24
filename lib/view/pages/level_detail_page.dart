@@ -12,6 +12,7 @@ import 'package:myanmar_to_thai/model/api/lesson_all.dart';
 import 'package:myanmar_to_thai/model/api/lesson_quiz.dart';
 import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
 import 'package:myanmar_to_thai/view/widgets/shimmer_loading.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../../core/mock/mock_data.dart';
@@ -113,12 +114,17 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                       ),
                       child: GridView.builder(
                         itemCount: lessonAll?.data.length ?? 0,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: ResponsiveBreakpoints.of(context)
+                                  .largerThan(MOBILE)
+                              ? 4
+                              : 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          childAspectRatio: 0.9,
+                          childAspectRatio: ResponsiveBreakpoints.of(context)
+                                  .largerThan(MOBILE)
+                              ? 1 / 1
+                              : 0.9,
                         ),
                         itemBuilder: (context, index) {
                           final lesson = lessonAll?.data[index];
@@ -157,7 +163,7 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                                         lesson?.image ?? "",
                                         width: constraints.maxWidth,
                                         height: constraints.maxHeight * 0.5,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.contain,
                                         frameBuilder: (c, w, _, __) {
                                           return ClipRRect(
                                             borderRadius: BorderRadius.all(

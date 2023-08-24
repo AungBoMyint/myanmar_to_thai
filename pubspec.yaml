@@ -53,6 +53,7 @@ dependencies:
   google_mobile_ads: ^3.0.0
   shimmer: ^3.0.0
   connectivity_plus: ^4.0.2
+  responsive_framework: ^1.0.0
   
   
 dev_dependencies:

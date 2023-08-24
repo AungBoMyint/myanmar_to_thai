@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'core/router/router.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
@@ -11,9 +13,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
 
-  await Firebase.initializeApp(
+  /*  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ); */
   runApp(const MyApp());
 }
 
@@ -29,6 +31,15 @@ class MyApp extends StatelessWidget {
       title: 'MyanThai LearnUp by KZN',
       theme: AppTheme.lightTheme(),
       initialRoute: homePage,
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
+      ),
       getPages: routes,
     );
   }

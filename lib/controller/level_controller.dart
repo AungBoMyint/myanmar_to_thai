@@ -11,8 +11,8 @@ class LevelController extends GetxController {
   // TODO: replace this test ad unit with your own ad unit.
 
   final bannerAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/6300978111'
-      : 'ca-app-pub-3940256099942544/2934735716';
+      ? 'ca-app-pub-4741364579691602/1373798675'
+      : 'ca-app-pub-4741364579691602/6076542582';
 
   /// Loads an interstitial ad.
 

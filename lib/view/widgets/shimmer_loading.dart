@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../pages/home_page.dart';
@@ -259,12 +260,16 @@ class LevelDetailShimmerLoading extends StatelessWidget {
           right: 20,
         ),
         child: GridView.builder(
-          itemCount: 3,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+          itemCount: 4,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:
+                ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 4 : 3,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: 0.9,
+            childAspectRatio:
+                ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+                    ? 1 / 1
+                    : 0.9,
           ),
           itemBuilder: (context, index) {
             return InkWell(

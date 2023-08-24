@@ -7,6 +7,7 @@ import 'package:myanmar_to_thai/controller/data_controller.dart';
 import 'package:myanmar_to_thai/controller/lesson_detail_controller.dart';
 import 'package:myanmar_to_thai/view/pages/connectivity_page.dart';
 import 'package:myanmar_to_thai/view/widgets/shimmer_loading.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../core/constant/app_icon.dart';
 import '../widgets/core.dart';
@@ -96,6 +97,11 @@ class LessonDetailPage extends StatelessWidget {
                                 width: 40,
                                 height: 40,
                               ),
+                              verticalSpace(
+                                  v: ResponsiveBreakpoints.of(context)
+                                          .largerThan(MOBILE)
+                                      ? 25
+                                      : 10),
                               //Image
                               Image.network(
                                 content.image,
@@ -126,28 +132,31 @@ class LessonDetailPage extends StatelessWidget {
                               verticalSpace(v: 25),
                               //Slow Audio Icon
                               SizedBox(
-                                width: 120,
+                                /*  width: 125, */
                                 child: containerWithBoxDecoration(
                                     child: InkWell(
                                   onTap: () =>
                                       ldController.playSnail(content.audio),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        AppIcon.snail,
-                                        width: 30,
-                                        height: 30,
-                                      ),
-                                      horizontalSpace(v: 8),
-                                      const Text(
-                                        "Play Slowly",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          AppIcon.snail,
+                                          width: 30,
+                                          height: 30,
                                         ),
-                                      ),
-                                    ],
-                                  ).withSymmetricPadding(v: 5, h: 5),
+                                        horizontalSpace(v: 8),
+                                        const Text(
+                                          "Play Slowly",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
+                                    ).withSymmetricPadding(v: 5, h: 5),
+                                  ),
                                 )),
                               ),
                               verticalSpace(),
@@ -164,7 +173,11 @@ class LessonDetailPage extends StatelessWidget {
                                 height: 40,
                               ),
 
-                              verticalSpace(),
+                              verticalSpace(
+                                  v: ResponsiveBreakpoints.of(context)
+                                          .largerThan(MOBILE)
+                                      ? 25
+                                      : 10),
                               Text(
                                 content.myanmar,
                                 style: const TextStyle(
