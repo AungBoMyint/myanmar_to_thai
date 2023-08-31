@@ -154,35 +154,36 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                                     )),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.network(
-                                        lesson?.image ?? "",
-                                        width: constraints.maxWidth,
-                                        height: constraints.maxHeight * 0.5,
-                                        fit: BoxFit.contain,
-                                        frameBuilder: (c, w, _, __) {
-                                          return ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10),
-                                            ),
-                                            child: w,
-                                          );
-                                        },
-                                      ),
-                                      verticalSpace(),
-                                      Expanded(
-                                        child: Text(
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.network(
+                                          lesson?.image ?? "",
+                                          width: constraints.maxWidth,
+                                          height: constraints.maxHeight * 0.5,
+                                          fit: BoxFit.contain,
+                                          frameBuilder: (c, w, _, __) {
+                                            return ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10),
+                                              ),
+                                              child: w,
+                                            );
+                                          },
+                                        ),
+                                        verticalSpace(),
+                                        Text(
                                           lesson?.name ?? "",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: textTheme.headlineSmall,
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

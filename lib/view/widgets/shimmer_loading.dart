@@ -263,13 +263,13 @@ class LevelDetailShimmerLoading extends StatelessWidget {
           itemCount: 4,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
-                ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 4 : 3,
+                ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 4 : 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio:
                 ResponsiveBreakpoints.of(context).largerThan(MOBILE)
                     ? 1 / 1
-                    : 0.9,
+                    : 1,
           ),
           itemBuilder: (context, index) {
             return InkWell(
