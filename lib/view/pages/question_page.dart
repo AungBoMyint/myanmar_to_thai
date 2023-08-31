@@ -183,7 +183,8 @@ class QuestionPage extends StatelessWidget {
                                               textTheme: textTheme,
                                             )
                                           : Container(
-                                              color: Colors.white,
+                                              /* color: Colors.white, */
+                                              padding: EdgeInsets.only(),
                                               child: GridView.builder(
                                                 gridDelegate:
                                                     const SliverGridDelegateWithFixedCrossAxisCount(
