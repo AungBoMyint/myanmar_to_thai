@@ -118,13 +118,13 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                           crossAxisCount: ResponsiveBreakpoints.of(context)
                                   .largerThan(MOBILE)
                               ? 4
-                              : 3,
+                              : 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                           childAspectRatio: ResponsiveBreakpoints.of(context)
                                   .largerThan(MOBILE)
                               ? 1 / 1
-                              : 0.9,
+                              : 1,
                         ),
                         itemBuilder: (context, index) {
                           final lesson = lessonAll?.data[index];

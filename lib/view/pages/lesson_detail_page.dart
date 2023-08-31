@@ -90,24 +90,41 @@ class LessonDetailPage extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              verticalSpace(),
                               //Thailand Flag
-                              Image.asset(
+                              /* Image.asset(
                                 AppIcon.thailand,
                                 width: 40,
                                 height: 40,
-                              ),
+                              ), */
                               verticalSpace(
                                   v: ResponsiveBreakpoints.of(context)
                                           .largerThan(MOBILE)
                                       ? 25
                                       : 10),
                               //Image
-                              Image.network(
-                                content.image,
-                                width: width * 0.5,
+                              Container(
+                                width: width * 0.8,
                                 height: height * 0.3,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(content.image),
+                                    fit: BoxFit
+                                        .contain, // Use BoxFit.contain instead of BoxFit.cover
+                                  ),
+                                ),
                               ),
+
+                              /* Container(
+                                /* color: Colors.blue.withOpacity(0.8), */
+                                width: width * 0.8,
+                                height: height * 0.3,
+                                child: Image.network(
+                                  content.image,
+                                  width: width * 0.8,
+                                  height: height * 0.28,
+                                  fit: BoxFit.cover,
+                                ),
+                              ), */
                               verticalSpace(),
                               //Thai Language
                               Text(
@@ -119,17 +136,16 @@ class LessonDetailPage extends StatelessWidget {
                                 ),
                               ),
                               verticalSpace(v: 25),
-                              //Play Audio Icon
-                              InkWell(
-                                onTap: () =>
-                                    ldController.playNormal(content.audio),
-                                child: Image.asset(
-                                  AppIcon.play,
-                                  width: 50,
-                                  height: 50,
+                              Text(
+                                content.pronuncation,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w300,
                                 ),
                               ),
                               verticalSpace(v: 25),
+
                               //Slow Audio Icon
                               SizedBox(
                                 /*  width: 125, */
@@ -167,17 +183,17 @@ class LessonDetailPage extends StatelessWidget {
                               //Myanmar Language
                               verticalSpace(),
 
-                              Image.asset(
+                              /*  Image.asset(
                                 AppIcon.myanmar,
                                 width: 40,
                                 height: 40,
-                              ),
+                              ), */
 
-                              verticalSpace(
+                              /* verticalSpace(
                                   v: ResponsiveBreakpoints.of(context)
                                           .largerThan(MOBILE)
                                       ? 25
-                                      : 10),
+                                      : 10), */
                               Text(
                                 content.myanmar,
                                 style: const TextStyle(
@@ -186,6 +202,18 @@ class LessonDetailPage extends StatelessWidget {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              verticalSpace(v: 10),
+                              //Play Audio Icon
+                              InkWell(
+                                onTap: () =>
+                                    ldController.playNormal(content.audio),
+                                child: Image.asset(
+                                  AppIcon.play,
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                              /* verticalSpace(v: 25), */
                             ],
                           );
                         });
@@ -213,7 +241,7 @@ class LessonDetailPage extends StatelessWidget {
         bottomNavigationBar: ConnectivityPage(
           notConnected: const SizedBox(),
           connected: SizedBox(
-            height: 50,
+            height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -221,7 +249,7 @@ class LessonDetailPage extends StatelessWidget {
                 Obx(() {
                   return ldController.currentIndex.value != 0
                       ? Expanded(
-                          flex: 3,
+                          flex: 4,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.grey.shade800,
@@ -231,11 +259,14 @@ class LessonDetailPage extends StatelessWidget {
                                   ),
                                 )),
                             onPressed: () => ldController.back(),
-                            child: const Text(
-                              "Previous",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                            child: const Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
+                                "Previous",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
@@ -250,7 +281,7 @@ class LessonDetailPage extends StatelessWidget {
                           (ldController.currentIndex.value !=
                               ldController.total.value)
                       ? Expanded(
-                          flex: 7,
+                          flex: 6,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.pink,
@@ -260,11 +291,14 @@ class LessonDetailPage extends StatelessWidget {
                                   ),
                                 )),
                             onPressed: () => ldController.next(),
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                            child: const Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
+                                "Next",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),

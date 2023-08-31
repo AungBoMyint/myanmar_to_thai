@@ -200,7 +200,7 @@ class LessonDetailController extends GetxController {
   }
 
   Future<void> loadBannerAds() async {
-    bannerAd.value = BannerAd(
+    /* final banner =  */ BannerAd(
       adUnitId: bannerAdUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
@@ -208,6 +208,7 @@ class LessonDetailController extends GetxController {
         // Called when an ad is successfully received.
         onAdLoaded: (ad) {
           debugPrint('$ad loaded.');
+          bannerAd.value = ad as BannerAd;
         },
         // Called when an ad request failed.
         onAdFailedToLoad: (ad, err) {
@@ -216,7 +217,14 @@ class LessonDetailController extends GetxController {
           ad.dispose();
         },
       ),
-    )..load();
+    ).load();
+    /* banner
+        .load()
+        .then((value) => bannerAd.value = banner)
+        .onError((error, stackTrace) {
+      log("========Lesson Detail Banner Error: $error");
+      throw Exception;
+    }); */
   }
   //-----------------------------//
 
@@ -231,6 +239,7 @@ class LessonDetailController extends GetxController {
   @override
   void onClose() {
     pausePlayer();
+    bannerAd.value == null;
     super.onClose();
   }
 

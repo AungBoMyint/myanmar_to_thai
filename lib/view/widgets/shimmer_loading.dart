@@ -313,13 +313,17 @@ class LessonDetailShimmerLoading extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             verticalSpace(),
-            //Thailand Flag
+            /* //Thailand Flag
             Container(
               color: Colors.white,
               width: 40,
               height: 40,
             ),
-            verticalSpace(),
+            verticalSpace(), */
+            verticalSpace(
+                v: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+                    ? 25
+                    : 10),
             //Image
             Container(
               color: Colors.white,
@@ -334,13 +338,13 @@ class LessonDetailShimmerLoading extends StatelessWidget {
               width: 80,
             ),
             verticalSpace(v: 25),
-            //Play Audio Icon
             Container(
               color: Colors.white,
-              width: 50,
-              height: 50,
+              height: 20,
+              width: 80,
             ),
             verticalSpace(v: 25),
+
             //Slow Audio Icon
             SizedBox(
               width: 120,
@@ -370,19 +374,31 @@ class LessonDetailShimmerLoading extends StatelessWidget {
               thickness: 0.8,
             ),
             //Myanmar Language
-            verticalSpace(),
+            /* verticalSpace(),
 
             Container(
               color: Colors.white,
               width: 40,
               height: 40,
             ),
-
+ */
             verticalSpace(),
+            verticalSpace(
+                v: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+                    ? 25
+                    : 10),
             Container(
               height: 20,
               width: 50,
               color: Colors.white,
+            ),
+
+            verticalSpace(v: 25),
+            //Play Audio Icon
+            Container(
+              color: Colors.white,
+              width: 80,
+              height: 80,
             ),
           ],
         );

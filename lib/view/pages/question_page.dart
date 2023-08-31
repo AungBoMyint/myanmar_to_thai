@@ -176,75 +176,31 @@ class QuestionPage extends StatelessWidget {
                                           question: question,
                                           qController: qController,
                                           textTheme: textTheme)
-                                      : Container(
-                                          color: Colors.blue,
-                                          child: LayoutBuilder(
-                                              builder: (context, constraints) {
-                                            final h = constraints.maxHeight;
-                                            final w = constraints.maxWidth;
-                                            return Stack(
-                                              children: List.generate(
-                                                question.choiceItems.length,
-                                                (index) {
-                                                  final item = question
+                                      : question.qestionType == selectCircle
+                                          ? SelectCircleWidget(
+                                              question: question,
+                                              qController: qController,
+                                              textTheme: textTheme,
+                                            )
+                                          : Container(
+                                              color: Colors.white,
+                                              child: GridView.builder(
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 10 / 6,
+                                                  crossAxisSpacing: 40,
+                                                  mainAxisSpacing: 40,
+                                                ),
+                                                itemCount:
+                                                    question.choiceItems.length,
+                                                itemBuilder: (context, index) {
+                                                  final choiceItem = question
                                                       .choiceItems[index];
-                                                  final circlePosition =
-                                                      circlePositions[index];
-                                                  return Positioned(
-                                                    left: circlePosition.left,
-                                                    top: circlePosition.top,
-                                                    right: circlePosition.right,
-                                                    bottom:
-                                                        circlePosition.bottom,
-                                                    child: Obx(() {
-                                                      var isUserTrue = (qController
-                                                              .isPressed
-                                                              .value &&
-                                                          item ==
-                                                              question.answer &&
-                                                          qController
-                                                                  .selectedAnswer
-                                                                  .value ==
-                                                              question.answer);
-                                                      var isFalse = (qController
-                                                              .isPressed
-                                                              .value &&
-                                                          item ==
-                                                              qController
-                                                                  .selectedAnswer
-                                                                  .value);
-                                                      return InkWell(
-                                                        onTap: () => qController
-                                                            .selectAnswer(item),
-                                                        child: CircleAvatar(
-                                                          radius: 30,
-                                                          backgroundColor:
-                                                              isUserTrue
-                                                                  ? Colors.green
-                                                                  : isFalse
-                                                                      ? Colors
-                                                                          .red
-                                                                      : Colors
-                                                                          .white,
-                                                          child: Center(
-                                                            child: Text(
-                                                              item,
-                                                              style: textTheme
-                                                                  .displayMedium,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }),
-                                                  );
-                                                },
-                                              )..add(Positioned(
-                                                  top: (h / 2) - 30,
-                                                  left: (w / 2) - 30,
-                                                  child: Obx(() {
+                                                  return Obx(() {
                                                     var isUserTrue = (qController
                                                             .isPressed.value &&
-                                                        "None" ==
+                                                        choiceItem ==
                                                             question.answer &&
                                                         qController
                                                                 .selectedAnswer
@@ -252,36 +208,50 @@ class QuestionPage extends StatelessWidget {
                                                             question.answer);
                                                     var isFalse = (qController
                                                             .isPressed.value &&
-                                                        "None" ==
+                                                        choiceItem ==
                                                             qController
                                                                 .selectedAnswer
                                                                 .value);
                                                     return InkWell(
                                                       onTap: () => qController
-                                                          .selectAnswer("None"),
-                                                      child: CircleAvatar(
-                                                        radius: 30,
-                                                        backgroundColor:
-                                                            isUserTrue
+                                                          .selectAnswer(
+                                                              choiceItem),
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 10,
+                                                                horizontal: 10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            Radius.circular(10),
+                                                          ),
+                                                          border: Border.all(
+                                                            width: 3,
+                                                            color: isUserTrue
                                                                 ? Colors.green
                                                                 : isFalse
                                                                     ? Colors.red
                                                                     : Colors
-                                                                        .white,
-                                                        child: Center(
-                                                          child: Text(
-                                                            "None",
-                                                            style: textTheme
-                                                                .displayMedium,
+                                                                        .grey
+                                                                        .shade300,
                                                           ),
+                                                        ),
+                                                        child: Image.network(
+                                                          choiceItem,
+                                                          /* width: ,
+                                                                height: , */
+                                                          fit: BoxFit.contain,
                                                         ),
                                                       ),
                                                     );
-                                                  }),
-                                                )),
-                                            );
-                                          }),
-                                        ),
+                                                  });
+                                                },
+                                              ),
+                                            ),
                                 ).withSymmetricPadding(v: 0, h: 20)
                               ],
                             );
@@ -309,6 +279,96 @@ class QuestionPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SelectCircleWidget extends StatelessWidget {
+  const SelectCircleWidget({
+    super.key,
+    required this.question,
+    required this.qController,
+    required this.textTheme,
+  });
+
+  final Question question;
+  final QuestionController qController;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      child: LayoutBuilder(builder: (context, constraints) {
+        final h = constraints.maxHeight;
+        final w = constraints.maxWidth;
+        return Stack(
+          children: List.generate(
+            question.choiceItems.length,
+            (index) {
+              final item = question.choiceItems[index];
+              final circlePosition = circlePositions[index];
+              return Positioned(
+                left: circlePosition.left,
+                top: circlePosition.top,
+                right: circlePosition.right,
+                bottom: circlePosition.bottom,
+                child: Obx(() {
+                  var isUserTrue = (qController.isPressed.value &&
+                      item == question.answer &&
+                      qController.selectedAnswer.value == question.answer);
+                  var isFalse = (qController.isPressed.value &&
+                      item == qController.selectedAnswer.value);
+                  return InkWell(
+                    onTap: () => qController.selectAnswer(item),
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: isUserTrue
+                          ? Colors.green
+                          : isFalse
+                              ? Colors.red
+                              : Colors.white,
+                      child: Center(
+                        child: Text(
+                          item,
+                          style: textTheme.displayMedium,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              );
+            },
+          )..add(Positioned(
+              top: (h / 2) - 30,
+              left: (w / 2) - 30,
+              child: Obx(() {
+                var isUserTrue = (qController.isPressed.value &&
+                    "None" == question.answer &&
+                    qController.selectedAnswer.value == question.answer);
+                var isFalse = (qController.isPressed.value &&
+                    "None" == qController.selectedAnswer.value);
+                return InkWell(
+                  onTap: () => qController.selectAnswer("None"),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: isUserTrue
+                        ? Colors.green
+                        : isFalse
+                            ? Colors.red
+                            : Colors.white,
+                    child: Center(
+                      child: Text(
+                        "None",
+                        style: textTheme.displayMedium,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            )),
+        );
+      }),
     );
   }
 }
