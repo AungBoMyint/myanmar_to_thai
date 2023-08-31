@@ -55,12 +55,26 @@ class QuestionController extends GetxController {
   bool hasPrevious() => currentIndex.value == 0 ? false : true;
   bool hasNext() => currentIndex.value == questions.length - 1 ? false : true;
 
+  Future<void> playFalse() async {
+    player = AudioPlayer();
+
+    await player?.setPlaybackRate(1);
+    await player?.play(AssetSource(falseMp3));
+  }
+
+  Future<void> playTrue() async {
+    player = AudioPlayer();
+    await player?.setPlaybackRate(1);
+    await player?.play(AssetSource(trueMp3));
+  }
+
   void selectAnswer(String inputAnswer) {
     pausePlayer();
     selectedAnswer.value = inputAnswer;
     isPressed.value = true;
     //Need to check answer if correct or not
     if (selectedAnswer.value != questions[currentIndex.value].answer) {
+      playFalse();
       //if not equal,show "Try Again"
       Get.bottomSheet(
           TryAgainOrContinueWidget(
@@ -92,6 +106,7 @@ class QuestionController extends GetxController {
             topRight: Radius.circular(20),
           )));
     } else {
+      playTrue();
       //Success BottomSheet
       Get.bottomSheet(
           TryAgainOrContinueWidget(

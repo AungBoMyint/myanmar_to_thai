@@ -81,6 +81,7 @@ class LessonDetailController extends GetxController {
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeIn,
       );
+      playNormal(contents[currentIndex.value].audio);
     }
 
     if ((currentIndex.value != total.value) &&
@@ -106,6 +107,7 @@ class LessonDetailController extends GetxController {
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
     );
+    playNormal(contents[currentIndex.value].audio);
   }
 
   @override
@@ -143,9 +145,14 @@ class LessonDetailController extends GetxController {
         "lessonId": dController.selectedLesson.value?.id,
       },
     ).executeGet<ContentAll>(ContentAllParser());
+
     loading.value = false;
     contents.value = result?.data ?? [];
     total.value = result?.count ?? 0;
+    //Play First Song....if not empty
+    if (contents.isNotEmpty) {
+      playNormal(contents[0].audio);
+    }
   }
 
   //---------Ads Initialize

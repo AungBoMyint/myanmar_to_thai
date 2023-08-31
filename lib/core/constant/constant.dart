@@ -80,3 +80,6 @@ const List<Color> colors = [
   Color(0XFF1843B1),
   Color(0XFFB15818),
 ];
+
+const String falseMp3 = "audio/false.mp3";
+const String trueMp3 = "audio/true.mp3";
