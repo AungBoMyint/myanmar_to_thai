@@ -176,11 +176,14 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                                           },
                                         ),
                                         verticalSpace(),
-                                        Text(
-                                          lesson?.name ?? "",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: textTheme.headlineSmall,
+                                        Expanded(
+                                          child: Text(
+                                            lesson?.name ?? "",
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: textTheme.headlineSmall,
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
                                       ],
                                     ),
