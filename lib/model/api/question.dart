@@ -15,7 +15,10 @@ class Question with _$Question {
     required String answer,
     required List<String> choiceItems,
     @JsonSerializable(explicitToJson: true) required ClassScope classId,
-    @JsonSerializable(explicitToJson: true) required Content contentId,
+/*     @JsonSerializable(explicitToJson: true, nullable: true) Content? contentId,
+ */
+    @JsonKey(nullable: true) String? question,
+    @JsonKey(nullable: true) String? audioUrl,
     @JsonSerializable(explicitToJson: true) required Lesson lessonId,
     @JsonSerializable(explicitToJson: true) required Level levelId,
     required String qestionType,

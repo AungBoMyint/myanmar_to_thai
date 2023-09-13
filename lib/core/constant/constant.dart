@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 List<String> retryAlternatives = [
-  "Oops, give it another shot!",
+  "သင့်အဖြေ မှားယွင်းနေပါသည်"
+  /*  "Oops, give it another shot!",
   "Not quite right, another attempt!",
   "Keep trying, you've got this!",
   "Almost there, one more go!",
@@ -21,11 +22,12 @@ List<String> retryAlternatives = [
   "Retry and conquer!",
   "You can do it! Go again.",
   "Mistakes happen, try once more!",
-  "Go again to master it!"
+  "Go again to master it!" */
 ];
 
 List<String> successAlternatives = [
-  "Great job! Keep it up",
+  "သင့်အဖြေ မှန်ကန်ပါသည်"
+  /* "Great job! Keep it up",
   "Well done! Keep going",
   "Excellent! Onward",
   "Awesome! Move forward",
@@ -44,7 +46,7 @@ List<String> successAlternatives = [
   "Way to go! Keep going",
   "Bingo! Keep advancing",
   "Precisely! Keep going strong",
-  "That's it! Keep it flowing",
+  "That's it! Keep it flowing", */
 ];
 
 List<String> completeQuizTitleAlternatives = [

@@ -14,7 +14,7 @@ class AppTheme {
     ),
     displaySmall: GoogleFonts.inika(
       color: Colors.black,
-      fontSize: 16,
+      fontSize: 13,
     ),
     headlineSmall: GoogleFonts.inika(
       color: Colors.black,
@@ -32,12 +32,12 @@ class AppTheme {
     ),
   );
   static ThemeData lightTheme() {
-    final colorCode = int.parse('050A30', radix: 16);
+    final colorCode = int.parse('091150', radix: 16);
 
     return ThemeData(
       scaffoldBackgroundColor: Colors.white,
       primarySwatch: MaterialColor(
-        0xff050A30,
+        0xff091150,
         <int, Color>{
           50: Color(colorCode),
           100: Color(colorCode),

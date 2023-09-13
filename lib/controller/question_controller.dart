@@ -94,7 +94,7 @@ class QuestionController extends GetxController {
             },
             alternativeText:
                 retryAlternatives[Random().nextInt(retryAlternatives.length)],
-            buttonText: "TRY AGAIN",
+            buttonText: "ပြန်လည်ကြိုးစားရန်",
           ),
           isDismissible: false,
           barrierColor: Colors.black45,
@@ -125,7 +125,7 @@ class QuestionController extends GetxController {
             },
             alternativeText: successAlternatives[
                 Random().nextInt(successAlternatives.length)],
-            buttonText: "CONTINUE",
+            buttonText: "ရှေ့သို့သွားရန်",
           ),
           isDismissible: false,
           barrierColor: Colors.black45,

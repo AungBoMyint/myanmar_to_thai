@@ -104,7 +104,7 @@ class TryAgainOrContinueWidget extends StatelessWidget {
           //retry alternate
           Text(
             alternativeText,
-            style: textTheme.headlineLarge,
+            style: textTheme.headlineMedium,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -123,9 +123,9 @@ class TryAgainOrContinueWidget extends StatelessWidget {
               onPressed: onPressed,
               child: Text(
                 buttonText,
-                style: const TextStyle(
+                style: textTheme.headlineMedium?.copyWith(
+                  fontSize: 14,
                   color: Colors.white,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

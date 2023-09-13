@@ -25,9 +25,13 @@ mixin _$Question {
   String get answer => throw _privateConstructorUsedError;
   List<String> get choiceItems => throw _privateConstructorUsedError;
   @JsonSerializable(explicitToJson: true)
-  ClassScope get classId => throw _privateConstructorUsedError;
-  @JsonSerializable(explicitToJson: true)
-  Content get contentId => throw _privateConstructorUsedError;
+  ClassScope get classId =>
+      throw _privateConstructorUsedError; /*     @JsonSerializable(explicitToJson: true, nullable: true) Content? contentId,
+ */
+  @JsonKey(nullable: true)
+  String? get question => throw _privateConstructorUsedError;
+  @JsonKey(nullable: true)
+  String? get audioUrl => throw _privateConstructorUsedError;
   @JsonSerializable(explicitToJson: true)
   Lesson get lessonId => throw _privateConstructorUsedError;
   @JsonSerializable(explicitToJson: true)
@@ -50,7 +54,8 @@ abstract class $QuestionCopyWith<$Res> {
       String answer,
       List<String> choiceItems,
       @JsonSerializable(explicitToJson: true) ClassScope classId,
-      @JsonSerializable(explicitToJson: true) Content contentId,
+      @JsonKey(nullable: true) String? question,
+      @JsonKey(nullable: true) String? audioUrl,
       @JsonSerializable(explicitToJson: true) Lesson lessonId,
       @JsonSerializable(explicitToJson: true) Level levelId,
       String qestionType});
@@ -73,7 +78,8 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
     Object? answer = null,
     Object? choiceItems = null,
     Object? classId = null,
-    Object? contentId = null,
+    Object? question = freezed,
+    Object? audioUrl = freezed,
     Object? lessonId = null,
     Object? levelId = null,
     Object? qestionType = null,
@@ -95,10 +101,14 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
           ? _value.classId
           : classId // ignore: cast_nullable_to_non_nullable
               as ClassScope,
-      contentId: null == contentId
-          ? _value.contentId
-          : contentId // ignore: cast_nullable_to_non_nullable
-              as Content,
+      question: freezed == question
+          ? _value.question
+          : question // ignore: cast_nullable_to_non_nullable
+              as String?,
+      audioUrl: freezed == audioUrl
+          ? _value.audioUrl
+          : audioUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       lessonId: null == lessonId
           ? _value.lessonId
           : lessonId // ignore: cast_nullable_to_non_nullable
@@ -127,7 +137,8 @@ abstract class _$$_QuestionCopyWith<$Res> implements $QuestionCopyWith<$Res> {
       String answer,
       List<String> choiceItems,
       @JsonSerializable(explicitToJson: true) ClassScope classId,
-      @JsonSerializable(explicitToJson: true) Content contentId,
+      @JsonKey(nullable: true) String? question,
+      @JsonKey(nullable: true) String? audioUrl,
       @JsonSerializable(explicitToJson: true) Lesson lessonId,
       @JsonSerializable(explicitToJson: true) Level levelId,
       String qestionType});
@@ -148,7 +159,8 @@ class __$$_QuestionCopyWithImpl<$Res>
     Object? answer = null,
     Object? choiceItems = null,
     Object? classId = null,
-    Object? contentId = null,
+    Object? question = freezed,
+    Object? audioUrl = freezed,
     Object? lessonId = null,
     Object? levelId = null,
     Object? qestionType = null,
@@ -170,10 +182,14 @@ class __$$_QuestionCopyWithImpl<$Res>
           ? _value.classId
           : classId // ignore: cast_nullable_to_non_nullable
               as ClassScope,
-      contentId: null == contentId
-          ? _value.contentId
-          : contentId // ignore: cast_nullable_to_non_nullable
-              as Content,
+      question: freezed == question
+          ? _value.question
+          : question // ignore: cast_nullable_to_non_nullable
+              as String?,
+      audioUrl: freezed == audioUrl
+          ? _value.audioUrl
+          : audioUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       lessonId: null == lessonId
           ? _value.lessonId
           : lessonId // ignore: cast_nullable_to_non_nullable
@@ -198,7 +214,8 @@ class _$_Question implements _Question {
       required this.answer,
       required final List<String> choiceItems,
       @JsonSerializable(explicitToJson: true) required this.classId,
-      @JsonSerializable(explicitToJson: true) required this.contentId,
+      @JsonKey(nullable: true) this.question,
+      @JsonKey(nullable: true) this.audioUrl,
       @JsonSerializable(explicitToJson: true) required this.lessonId,
       @JsonSerializable(explicitToJson: true) required this.levelId,
       required this.qestionType})
@@ -223,9 +240,14 @@ class _$_Question implements _Question {
   @override
   @JsonSerializable(explicitToJson: true)
   final ClassScope classId;
+/*     @JsonSerializable(explicitToJson: true, nullable: true) Content? contentId,
+ */
   @override
-  @JsonSerializable(explicitToJson: true)
-  final Content contentId;
+  @JsonKey(nullable: true)
+  final String? question;
+  @override
+  @JsonKey(nullable: true)
+  final String? audioUrl;
   @override
   @JsonSerializable(explicitToJson: true)
   final Lesson lessonId;
@@ -237,7 +259,7 @@ class _$_Question implements _Question {
 
   @override
   String toString() {
-    return 'Question(id: $id, answer: $answer, choiceItems: $choiceItems, classId: $classId, contentId: $contentId, lessonId: $lessonId, levelId: $levelId, qestionType: $qestionType)';
+    return 'Question(id: $id, answer: $answer, choiceItems: $choiceItems, classId: $classId, question: $question, audioUrl: $audioUrl, lessonId: $lessonId, levelId: $levelId, qestionType: $qestionType)';
   }
 
   @override
@@ -250,8 +272,10 @@ class _$_Question implements _Question {
             const DeepCollectionEquality()
                 .equals(other._choiceItems, _choiceItems) &&
             (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.contentId, contentId) ||
-                other.contentId == contentId) &&
+            (identical(other.question, question) ||
+                other.question == question) &&
+            (identical(other.audioUrl, audioUrl) ||
+                other.audioUrl == audioUrl) &&
             (identical(other.lessonId, lessonId) ||
                 other.lessonId == lessonId) &&
             (identical(other.levelId, levelId) || other.levelId == levelId) &&
@@ -267,7 +291,8 @@ class _$_Question implements _Question {
       answer,
       const DeepCollectionEquality().hash(_choiceItems),
       classId,
-      contentId,
+      question,
+      audioUrl,
       lessonId,
       levelId,
       qestionType);
@@ -292,7 +317,8 @@ abstract class _Question implements Question {
       required final String answer,
       required final List<String> choiceItems,
       @JsonSerializable(explicitToJson: true) required final ClassScope classId,
-      @JsonSerializable(explicitToJson: true) required final Content contentId,
+      @JsonKey(nullable: true) final String? question,
+      @JsonKey(nullable: true) final String? audioUrl,
       @JsonSerializable(explicitToJson: true) required final Lesson lessonId,
       @JsonSerializable(explicitToJson: true) required final Level levelId,
       required final String qestionType}) = _$_Question;
@@ -309,9 +335,13 @@ abstract class _Question implements Question {
   @override
   @JsonSerializable(explicitToJson: true)
   ClassScope get classId;
+  @override /*     @JsonSerializable(explicitToJson: true, nullable: true) Content? contentId,
+ */
+  @JsonKey(nullable: true)
+  String? get question;
   @override
-  @JsonSerializable(explicitToJson: true)
-  Content get contentId;
+  @JsonKey(nullable: true)
+  String? get audioUrl;
   @override
   @JsonSerializable(explicitToJson: true)
   Lesson get lessonId;

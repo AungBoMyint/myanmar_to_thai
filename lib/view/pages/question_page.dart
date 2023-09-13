@@ -106,165 +106,174 @@ class QuestionPage extends StatelessWidget {
                             return SizedBox(
                               height: size.height,
                               width: size.width,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  verticalSpace(),
-                                  //Question Card
-                                  SizedBox(
-                                    height: height * 0.3,
-                                    width: width * 0.9,
-                                    child: Card(
-                                      elevation: 3,
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            top: 5,
-                                            right: 5,
-                                            child: InkWell(
-                                              onTap: () =>
-                                                  qController.playNormal(
-                                                      question.contentId.audio),
-                                              child: Image.asset(
-                                                AppIcon.play,
-                                                width: 35,
-                                                height: 35,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    verticalSpace(),
+                                    //Question Card
+                                    SizedBox(
+                                      height: height * 0.3,
+                                      width: width * 0.9,
+                                      child: Card(
+                                        elevation: 3,
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                              top: 5,
+                                              right: 5,
+                                              child: InkWell(
+                                                onTap: () =>
+                                                    qController.playNormal(
+                                                        question.audioUrl ??
+                                                            ""),
+                                                child: Image.asset(
+                                                  AppIcon.play,
+                                                  width: 35,
+                                                  height: 35,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          //Top Right Audio Play
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10, right: 10, top: 10),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    question.contentId.thai,
-                                                    style:
-                                                        textTheme.displayMedium,
-                                                  ),
-                                                  /* verticalSpace(),
-                                                  Text(
-                                                    question
-                                                        .contentId.pronuncation,
-                                                    style: textTheme.displaySmall,
-                                                  ), */
-                                                ],
+                                            //Top Right Audio Play
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10,
+                                                    right: 10,
+                                                    top: 10),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      question.question ?? "",
+                                                      style: textTheme
+                                                          .displayMedium,
+                                                    ),
+                                                    /* verticalSpace(),
+                                                    Text(
+                                                      question
+                                                          .contentId.pronuncation,
+                                                      style: textTheme.displaySmall,
+                                                    ), */
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  verticalSpace(
-                                      v: ResponsiveBreakpoints.of(context)
-                                              .largerThan(MOBILE)
-                                          ? 80
-                                          : 60),
-                                  //Command Text
-                                  Text(
-                                    "Select the correct answer",
-                                    style: textTheme.displaySmall?.copyWith(
-                                      color: Colors.grey.shade700,
+                                    verticalSpace(
+                                        v: ResponsiveBreakpoints.of(context)
+                                                .largerThan(MOBILE)
+                                            ? 80
+                                            : 60),
+                                    //Command Text
+                                    Text(
+                                      "အဖြေမှန်ကို ရွေးချယ်ပါ",
+                                      style: textTheme.displaySmall?.copyWith(
+                                        color: theme.primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  verticalSpace(v: 25),
-                                  //Choice List
-                                  SizedBox(
-                                    height: ResponsiveBreakpoints.of(context)
-                                            .largerThan(MOBILE)
-                                        ? size.height * 0.5
-                                        : size.height * 0.45,
-                                    child: question.qestionType ==
-                                                selectRactangle ||
-                                            question.qestionType == selectCircle
-                                        ? SelectRectangleWidget(
-                                            question: question,
-                                            qController: qController,
-                                            textTheme: textTheme)
-                                        : /* question.qestionType == selectCircle
-                                            ? SelectCircleWidget(
-                                                question: question,
-                                                qController: qController,
-                                                textTheme: textTheme,
-                                              )
-                                            : */
-                                        Container(
-                                            /* color: Colors.white, */
-                                            padding: EdgeInsets.only(),
-                                            child: GridView.builder(
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                childAspectRatio: 10 / 8,
-                                                crossAxisSpacing: 40,
-                                                mainAxisSpacing: 40,
+                                    verticalSpace(v: 25),
+                                    //Choice List
+                                    SizedBox(
+                                      height: ResponsiveBreakpoints.of(context)
+                                              .largerThan(MOBILE)
+                                          ? size.height * 0.5
+                                          : size.height * 0.45,
+                                      child: question.qestionType ==
+                                                  selectRactangle ||
+                                              question.qestionType ==
+                                                  selectCircle
+                                          ? SelectRectangleWidget(
+                                              question: question,
+                                              qController: qController,
+                                              textTheme: textTheme)
+                                          : /* question.qestionType == selectCircle
+                                              ? SelectCircleWidget(
+                                                  question: question,
+                                                  qController: qController,
+                                                  textTheme: textTheme,
+                                                )
+                                              : */
+                                          Container(
+                                              /* color: Colors.white, */
+                                              padding: EdgeInsets.only(),
+                                              child: GridView.builder(
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 10 / 8,
+                                                  crossAxisSpacing: 40,
+                                                  mainAxisSpacing: 40,
+                                                ),
+                                                itemCount:
+                                                    question.choiceItems.length,
+                                                itemBuilder: (context, index) {
+                                                  final choiceItem = question
+                                                      .choiceItems[index];
+                                                  return Obx(() {
+                                                    var isUserTrue = (qController
+                                                            .isPressed.value &&
+                                                        choiceItem ==
+                                                            question.answer &&
+                                                        qController
+                                                                .selectedAnswer
+                                                                .value ==
+                                                            question.answer);
+                                                    var isFalse = (qController
+                                                            .isPressed.value &&
+                                                        choiceItem ==
+                                                            qController
+                                                                .selectedAnswer
+                                                                .value);
+                                                    return InkWell(
+                                                      onTap: () => qController
+                                                          .selectAnswer(
+                                                              choiceItem),
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                vertical: 10,
+                                                                horizontal: 10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            Radius.circular(10),
+                                                          ),
+                                                          border: Border.all(
+                                                            width: 3,
+                                                            color: isUserTrue
+                                                                ? Colors.green
+                                                                : isFalse
+                                                                    ? Colors.red
+                                                                    : theme
+                                                                        .primaryColor,
+                                                          ),
+                                                        ),
+                                                        child: Image.network(
+                                                          choiceItem,
+                                                          /* width: ,
+                                                                    height: , */
+                                                          fit: BoxFit.contain,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
                                               ),
-                                              itemCount:
-                                                  question.choiceItems.length,
-                                              itemBuilder: (context, index) {
-                                                final choiceItem =
-                                                    question.choiceItems[index];
-                                                return Obx(() {
-                                                  var isUserTrue = (qController
-                                                          .isPressed.value &&
-                                                      choiceItem ==
-                                                          question.answer &&
-                                                      qController.selectedAnswer
-                                                              .value ==
-                                                          question.answer);
-                                                  var isFalse = (qController
-                                                          .isPressed.value &&
-                                                      choiceItem ==
-                                                          qController
-                                                              .selectedAnswer
-                                                              .value);
-                                                  return InkWell(
-                                                    onTap: () => qController
-                                                        .selectAnswer(
-                                                            choiceItem),
-                                                    child: Container(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 10,
-                                                          horizontal: 10),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                          Radius.circular(10),
-                                                        ),
-                                                        border: Border.all(
-                                                          width: 3,
-                                                          color: isUserTrue
-                                                              ? Colors.green
-                                                              : isFalse
-                                                                  ? Colors.red
-                                                                  : theme
-                                                                      .primaryColor,
-                                                        ),
-                                                      ),
-                                                      child: Image.network(
-                                                        choiceItem,
-                                                        /* width: ,
-                                                                  height: , */
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
-                                              },
                                             ),
-                                          ),
-                                  ).withSymmetricPadding(v: 0, h: 20)
-                                ],
+                                    ).withSymmetricPadding(v: 0, h: 20)
+                                  ],
+                                ),
                               ),
                             );
                           });
