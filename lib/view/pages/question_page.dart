@@ -29,6 +29,7 @@ class QuestionPage extends StatelessWidget {
     final lessonImage = dController.selectedLesson.value?.image ?? "";
     log("Title Image: $lessonImage");
     final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -38,14 +39,14 @@ class QuestionPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFFF53A9),
+          backgroundColor: Color(0xFF050A30),
           toolbarHeight: 80,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundColor: Color(0xffff98a2),
+                backgroundColor: theme.primaryColor,
                 child: CircleAvatar(
                   radius: 24,
                   backgroundColor: Colors.white,
@@ -102,159 +103,169 @@ class QuestionPage extends StatelessWidget {
                           return LayoutBuilder(builder: (context, constraints) {
                             final width = constraints.maxWidth;
                             final height = constraints.maxHeight;
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                verticalSpace(),
-                                //Question Card
-                                SizedBox(
-                                  height: height * 0.3,
-                                  width: width * 0.8,
-                                  child: Card(
-                                    elevation: 3,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                          top: 5,
-                                          right: 5,
-                                          child: InkWell(
-                                            onTap: () => qController.playNormal(
-                                                question.contentId.audio),
-                                            child: Image.asset(
-                                              AppIcon.play,
-                                              width: 50,
-                                              height: 50,
+                            return SizedBox(
+                              height: size.height,
+                              width: size.width,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  verticalSpace(),
+                                  //Question Card
+                                  SizedBox(
+                                    height: height * 0.3,
+                                    width: width * 0.9,
+                                    child: Card(
+                                      elevation: 3,
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            top: 5,
+                                            right: 5,
+                                            child: InkWell(
+                                              onTap: () =>
+                                                  qController.playNormal(
+                                                      question.contentId.audio),
+                                              child: Image.asset(
+                                                AppIcon.play,
+                                                width: 35,
+                                                height: 35,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        //Top Right Audio Play
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                question.contentId.thai,
-                                                style: textTheme.displayMedium,
+                                          //Top Right Audio Play
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10, top: 10),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    question.contentId.thai,
+                                                    style:
+                                                        textTheme.displayMedium,
+                                                  ),
+                                                  /* verticalSpace(),
+                                                  Text(
+                                                    question
+                                                        .contentId.pronuncation,
+                                                    style: textTheme.displaySmall,
+                                                  ), */
+                                                ],
                                               ),
-                                              verticalSpace(),
-                                              Text(
-                                                question.contentId.pronuncation,
-                                                style: textTheme.displaySmall,
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                verticalSpace(
-                                    v: ResponsiveBreakpoints.of(context)
-                                            .largerThan(MOBILE)
-                                        ? 80
-                                        : 45),
-                                //Command Text
-                                Text(
-                                  "Select the correct answer",
-                                  style: textTheme.displaySmall?.copyWith(
-                                    color: Colors.grey.shade700,
+                                  verticalSpace(
+                                      v: ResponsiveBreakpoints.of(context)
+                                              .largerThan(MOBILE)
+                                          ? 80
+                                          : 60),
+                                  //Command Text
+                                  Text(
+                                    "Select the correct answer",
+                                    style: textTheme.displaySmall?.copyWith(
+                                      color: Colors.grey.shade700,
+                                    ),
                                   ),
-                                ),
-                                verticalSpace(),
-                                //Choice List
-                                Container(
-                                  height: ResponsiveBreakpoints.of(context)
-                                          .largerThan(MOBILE)
-                                      ? size.height * 0.5
-                                      : size.height * 0.4,
-                                  child: question.qestionType == selectRactangle
-                                      ? SelectRectangleWidget(
-                                          question: question,
-                                          qController: qController,
-                                          textTheme: textTheme)
-                                      : question.qestionType == selectCircle
-                                          ? SelectCircleWidget(
-                                              question: question,
-                                              qController: qController,
-                                              textTheme: textTheme,
-                                            )
-                                          : Container(
-                                              /* color: Colors.white, */
-                                              padding: EdgeInsets.only(),
-                                              child: GridView.builder(
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 10 / 6,
-                                                  crossAxisSpacing: 40,
-                                                  mainAxisSpacing: 40,
-                                                ),
-                                                itemCount:
-                                                    question.choiceItems.length,
-                                                itemBuilder: (context, index) {
-                                                  final choiceItem = question
-                                                      .choiceItems[index];
-                                                  return Obx(() {
-                                                    var isUserTrue = (qController
-                                                            .isPressed.value &&
-                                                        choiceItem ==
-                                                            question.answer &&
-                                                        qController
-                                                                .selectedAnswer
-                                                                .value ==
-                                                            question.answer);
-                                                    var isFalse = (qController
-                                                            .isPressed.value &&
-                                                        choiceItem ==
-                                                            qController
-                                                                .selectedAnswer
-                                                                .value);
-                                                    return InkWell(
-                                                      onTap: () => qController
-                                                          .selectAnswer(
-                                                              choiceItem),
-                                                      child: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 10),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .all(
-                                                            Radius.circular(10),
-                                                          ),
-                                                          border: Border.all(
-                                                            width: 3,
-                                                            color: isUserTrue
-                                                                ? Colors.green
-                                                                : isFalse
-                                                                    ? Colors.red
-                                                                    : Colors
-                                                                        .grey
-                                                                        .shade300,
-                                                          ),
+                                  verticalSpace(v: 25),
+                                  //Choice List
+                                  SizedBox(
+                                    height: ResponsiveBreakpoints.of(context)
+                                            .largerThan(MOBILE)
+                                        ? size.height * 0.5
+                                        : size.height * 0.45,
+                                    child: question.qestionType ==
+                                                selectRactangle ||
+                                            question.qestionType == selectCircle
+                                        ? SelectRectangleWidget(
+                                            question: question,
+                                            qController: qController,
+                                            textTheme: textTheme)
+                                        : /* question.qestionType == selectCircle
+                                            ? SelectCircleWidget(
+                                                question: question,
+                                                qController: qController,
+                                                textTheme: textTheme,
+                                              )
+                                            : */
+                                        Container(
+                                            /* color: Colors.white, */
+                                            padding: EdgeInsets.only(),
+                                            child: GridView.builder(
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 10 / 8,
+                                                crossAxisSpacing: 40,
+                                                mainAxisSpacing: 40,
+                                              ),
+                                              itemCount:
+                                                  question.choiceItems.length,
+                                              itemBuilder: (context, index) {
+                                                final choiceItem =
+                                                    question.choiceItems[index];
+                                                return Obx(() {
+                                                  var isUserTrue = (qController
+                                                          .isPressed.value &&
+                                                      choiceItem ==
+                                                          question.answer &&
+                                                      qController.selectedAnswer
+                                                              .value ==
+                                                          question.answer);
+                                                  var isFalse = (qController
+                                                          .isPressed.value &&
+                                                      choiceItem ==
+                                                          qController
+                                                              .selectedAnswer
+                                                              .value);
+                                                  return InkWell(
+                                                    onTap: () => qController
+                                                        .selectAnswer(
+                                                            choiceItem),
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 10),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                          Radius.circular(10),
                                                         ),
-                                                        child: Image.network(
-                                                          choiceItem,
-                                                          /* width: ,
-                                                                height: , */
-                                                          fit: BoxFit.contain,
+                                                        border: Border.all(
+                                                          width: 3,
+                                                          color: isUserTrue
+                                                              ? Colors.green
+                                                              : isFalse
+                                                                  ? Colors.red
+                                                                  : theme
+                                                                      .primaryColor,
                                                         ),
                                                       ),
-                                                    );
-                                                  });
-                                                },
-                                              ),
+                                                      child: Image.network(
+                                                        choiceItem,
+                                                        /* width: ,
+                                                                  height: , */
+                                                        fit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                              },
                                             ),
-                                ).withSymmetricPadding(v: 0, h: 20)
-                              ],
+                                          ),
+                                  ).withSymmetricPadding(v: 0, h: 20)
+                                ],
+                              ),
                             );
                           });
                         }),
@@ -298,8 +309,11 @@ class SelectCircleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
-      color: Colors.blue,
+      decoration: BoxDecoration(
+          color: theme.primaryColor,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: LayoutBuilder(builder: (context, constraints) {
         final h = constraints.maxHeight;
         final w = constraints.maxWidth;
@@ -388,6 +402,7 @@ class SelectRectangleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListView.separated(
       itemCount: question.choiceItems.length,
       separatorBuilder: (context, index) => verticalSpace(),
@@ -416,10 +431,20 @@ class SelectRectangleWidget extends StatelessWidget {
               ),
               child: Center(
                 child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: theme.primaryColor,
+                    child: Text(
+                      getLetter(index),
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   title: Center(
                     child: Text(
                       item,
-                      style: textTheme.displayMedium,
+                      style: textTheme.displaySmall,
                     ),
                   ),
                   trailing: isUserTrue
@@ -438,12 +463,31 @@ class SelectRectangleWidget extends StatelessWidget {
   }
 }
 
+String getLetter(int index) {
+  switch (index) {
+    case 0:
+      return "A";
+    case 1:
+      return "B";
+    case 2:
+      return "C";
+    case 3:
+      return "D";
+    case 4:
+      return "E";
+    case 5:
+      return "F";
+    default:
+      return "G";
+  }
+}
+
 class CustomBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     log("Canvas Size: $size");
     var paint = Paint()
-      ..color = Color(0xFFFF53A9)
+      ..color = const Color(0xFF050A30)
       ..strokeWidth = 5
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;

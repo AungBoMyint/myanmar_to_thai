@@ -32,12 +32,12 @@ class AppTheme {
     ),
   );
   static ThemeData lightTheme() {
-    final colorCode = int.parse('1C4E8F', radix: 16);
+    final colorCode = int.parse('050A30', radix: 16);
 
     return ThemeData(
-      scaffoldBackgroundColor: Colors.white /* const Color(0xFFF9F2F1) */,
+      scaffoldBackgroundColor: Colors.white,
       primarySwatch: MaterialColor(
-        0xff1C4E8F,
+        0xff050A30,
         <int, Color>{
           50: Color(colorCode),
           100: Color(colorCode),

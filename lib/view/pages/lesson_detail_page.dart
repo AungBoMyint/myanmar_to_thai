@@ -22,6 +22,7 @@ class LessonDetailPage extends StatelessWidget {
     final lesson = dController.selectedLesson.value?.name ?? "";
     final lessonImage = dController.selectedLesson.value?.image ?? "";
     final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async {
         if (ldController.interstitialAd == null) return true;
@@ -36,7 +37,7 @@ class LessonDetailPage extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundColor: Color(0xffff98a2),
+                backgroundColor: theme.primaryColor,
                 child: CircleAvatar(
                   radius: 24,
                   backgroundColor: Colors.white,
@@ -209,8 +210,8 @@ class LessonDetailPage extends StatelessWidget {
                                     ldController.playNormal(content.audio),
                                 child: Image.asset(
                                   AppIcon.play,
-                                  width: 100,
-                                  height: 100,
+                                  width: 80,
+                                  height: 80,
                                 ),
                               ),
                               /* verticalSpace(v: 25), */
@@ -284,7 +285,7 @@ class LessonDetailPage extends StatelessWidget {
                           flex: 6,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.pink,
+                                backgroundColor: theme.primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),

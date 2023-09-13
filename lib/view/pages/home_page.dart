@@ -119,11 +119,12 @@ class ThirdStyleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final DataController dController = Get.find();
     return Container(
       /*  height: 150, */
       width: size.width,
-      color: Colors.white,
+      color: theme.scaffoldBackgroundColor,
       padding: const EdgeInsets.only(
         left: 25,
         right: 25,
@@ -234,11 +235,12 @@ class SecondStyleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final DataController dController = Get.find();
     return Container(
       /*  height: 150, */
       width: size.width,
-      color: Colors.white,
+      color: theme.scaffoldBackgroundColor,
       padding: const EdgeInsets.only(
         top: 15,
         bottom: 15,
@@ -348,9 +350,10 @@ class FirstStyleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final DataController dController = Get.find();
     return Container(
-      color: Colors.white,
+      color: theme.scaffoldBackgroundColor,
       padding: const EdgeInsets.only(
         top: 15,
         bottom: 15,

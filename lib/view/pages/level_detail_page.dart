@@ -54,6 +54,7 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
     String level = dController.selectedLevel.value?.name ?? "";
     String levelImage = dController.selectedLevel.value?.image ?? "";
     final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -62,7 +63,7 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
           children: [
             CircleAvatar(
               radius: 25,
-              backgroundColor: Color(0xffff98a2),
+              backgroundColor: theme.primaryColor,
               child: CircleAvatar(
                 radius: 24,
                 backgroundColor: Colors.black,
@@ -143,14 +144,14 @@ class _LevelDetailPageState extends State<LevelDetailPage> {
                               log("===Width: ${constraints.maxWidth}");
                               return Card(
                                 color: Colors.white,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(
                                         15,
                                       ),
                                     ),
                                     side: BorderSide(
-                                      color: Colors.grey,
+                                      color: theme.primaryColor,
                                     )),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
