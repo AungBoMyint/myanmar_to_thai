@@ -179,7 +179,11 @@ class QuestionPage extends StatelessWidget {
                                         color: theme.primaryColor,
                                       ),
                                     ),
-                                    verticalSpace(v: 25),
+                                    verticalSpace(
+                                        v: ResponsiveBreakpoints.of(context)
+                                                .largerThan(MOBILE)
+                                            ? 85
+                                            : 25),
                                     //Choice List
                                     SizedBox(
                                       height: ResponsiveBreakpoints.of(context)
@@ -206,9 +210,15 @@ class QuestionPage extends StatelessWidget {
                                               padding: EdgeInsets.only(),
                                               child: GridView.builder(
                                                 gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 2,
-                                                  childAspectRatio: 10 / 8,
+                                                  childAspectRatio:
+                                                      ResponsiveBreakpoints.of(
+                                                                  context)
+                                                              .largerThan(
+                                                                  MOBILE)
+                                                          ? 10 / 5
+                                                          : 10 / 8,
                                                   crossAxisSpacing: 40,
                                                   mainAxisSpacing: 40,
                                                 ),
