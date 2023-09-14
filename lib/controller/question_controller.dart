@@ -39,6 +39,9 @@ class QuestionController extends GetxController {
 
   Future<void> playNormal(String source) async {
     if (playerLoading.value) return;
+    if (source.isEmpty) {
+      return;
+    }
     playerLoading.value = true;
     if (!(player == null)) pausePlayer();
     player = null;
