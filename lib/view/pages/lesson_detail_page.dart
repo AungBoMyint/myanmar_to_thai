@@ -88,134 +88,137 @@ class LessonDetailPage extends StatelessWidget {
                         return LayoutBuilder(builder: (context, constraints) {
                           final width = constraints.maxWidth;
                           final height = constraints.maxHeight;
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              //Thailand Flag
-                              /* Image.asset(
-                                AppIcon.thailand,
-                                width: 40,
-                                height: 40,
-                              ), */
-                              verticalSpace(
-                                  v: ResponsiveBreakpoints.of(context)
-                                          .largerThan(MOBILE)
-                                      ? 25
-                                      : 10),
-                              //Image
-                              Container(
-                                width: width * 0.8,
-                                height: height * 0.3,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(content.image),
-                                    fit: BoxFit
-                                        .contain, // Use BoxFit.contain instead of BoxFit.cover
-                                  ),
-                                ),
-                              ),
-
-                              /* Container(
-                                /* color: Colors.blue.withOpacity(0.8), */
-                                width: width * 0.8,
-                                height: height * 0.3,
-                                child: Image.network(
-                                  content.image,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                //Thailand Flag
+                                /* Image.asset(
+                                  AppIcon.thailand,
+                                  width: 40,
+                                  height: 40,
+                                ), */
+                                verticalSpace(
+                                    v: ResponsiveBreakpoints.of(context)
+                                            .largerThan(MOBILE)
+                                        ? 25
+                                        : 10),
+                                //Image
+                                Container(
                                   width: width * 0.8,
-                                  height: height * 0.28,
-                                  fit: BoxFit.cover,
-                                ),
-                              ), */
-                              verticalSpace(),
-                              //Thai Language
-                              Text(
-                                content.thai,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              verticalSpace(v: 25),
-                              Text(
-                                content.pronuncation,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                              verticalSpace(v: 25),
-
-                              //Slow Audio Icon
-                              SizedBox(
-                                /*  width: 125, */
-                                child: containerWithBoxDecoration(
-                                    child: InkWell(
-                                  onTap: () =>
-                                      ldController.playSnail(content.audio),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          AppIcon.snail,
-                                          width: 30,
-                                          height: 30,
-                                        ),
-                                        horizontalSpace(v: 8),
-                                        const Text(
-                                          "Play Slowly",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ).withSymmetricPadding(v: 5, h: 5),
+                                  height: height * 0.3,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(content.image),
+                                      fit: BoxFit
+                                          .contain, // Use BoxFit.contain instead of BoxFit.cover
+                                    ),
                                   ),
-                                )),
-                              ),
-                              verticalSpace(),
-                              //Horizontal Divider
-                              const Divider(
-                                thickness: 0.8,
-                              ),
-                              //Myanmar Language
-                              verticalSpace(),
-
-                              /*  Image.asset(
-                                AppIcon.myanmar,
-                                width: 40,
-                                height: 40,
-                              ), */
-
-                              /* verticalSpace(
-                                  v: ResponsiveBreakpoints.of(context)
-                                          .largerThan(MOBILE)
-                                      ? 25
-                                      : 10), */
-                              Text(
-                                content.myanmar,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
                                 ),
-                              ),
-                              verticalSpace(v: 10),
-                              //Play Audio Icon
-                              InkWell(
-                                onTap: () =>
-                                    ldController.playNormal(content.audio),
-                                child: Image.asset(
-                                  AppIcon.play,
-                                  width: 80,
-                                  height: 80,
+
+                                /* Container(
+                                  /* color: Colors.blue.withOpacity(0.8), */
+                                  width: width * 0.8,
+                                  height: height * 0.3,
+                                  child: Image.network(
+                                    content.image,
+                                    width: width * 0.8,
+                                    height: height * 0.28,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ), */
+                                verticalSpace(),
+                                //Thai Language
+                                Text(
+                                  content.thai,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              /* verticalSpace(v: 25), */
-                            ],
+                                verticalSpace(v: 25),
+                                Text(
+                                  content.pronuncation,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                                verticalSpace(v: 25),
+
+                                //Slow Audio Icon
+                                SizedBox(
+                                  /*  width: 125, */
+                                  child: containerWithBoxDecoration(
+                                      child: InkWell(
+                                    onTap: () =>
+                                        ldController.playSnail(content.audio),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            AppIcon.snail,
+                                            width: 30,
+                                            height: 30,
+                                          ),
+                                          horizontalSpace(v: 8),
+                                          const Text(
+                                            "Play Slowly",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ).withSymmetricPadding(v: 5, h: 5),
+                                    ),
+                                  )),
+                                ),
+                                verticalSpace(),
+                                //Horizontal Divider
+                                const Divider(
+                                  thickness: 0.8,
+                                ),
+                                //Myanmar Language
+                                verticalSpace(),
+
+                                /*  Image.asset(
+                                  AppIcon.myanmar,
+                                  width: 40,
+                                  height: 40,
+                                ), */
+
+                                /* verticalSpace(
+                                    v: ResponsiveBreakpoints.of(context)
+                                            .largerThan(MOBILE)
+                                        ? 25
+                                        : 10), */
+                                Text(
+                                  content.myanmar,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                verticalSpace(v: 10),
+                                //Play Audio Icon
+                                InkWell(
+                                  onTap: () =>
+                                      ldController.playNormal(content.audio),
+                                  child: Image.asset(
+                                    AppIcon.play,
+                                    width: 80,
+                                    height: 80,
+                                  ),
+                                ),
+                                /* verticalSpace(v: 25), */
+                              ],
+                            ),
                           );
                         });
                       }),
