@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -47,7 +49,13 @@ class LessonDetailPage extends StatelessWidget {
                 ),
               ),
               horizontalSpace(),
-              Text(lesson),
+              Expanded(
+                child: Text(
+                  lesson,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
           titleTextStyle: textTheme.displayMedium,
@@ -137,6 +145,7 @@ class LessonDetailPage extends StatelessWidget {
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 verticalSpace(v: 25),
                                 Text(
@@ -146,6 +155,7 @@ class LessonDetailPage extends StatelessWidget {
                                     fontSize: 20,
                                     fontWeight: FontWeight.w300,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 verticalSpace(v: 25),
 
