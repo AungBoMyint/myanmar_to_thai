@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myanmar_to_thai/controller/data_controller.dart';
@@ -266,7 +268,7 @@ class SecondStyleWidget extends StatelessWidget {
               ).executeGet<LevelAll>(LevelAllParser()),
               onSuccess: (levelAll) {
                 return SizedBox(
-                  height: 120,
+                  height: 140,
                   child: ListView.separated(
                     itemCount: levelAll?.data.length ?? 0,
                     scrollDirection: Axis.horizontal,
@@ -289,42 +291,49 @@ class SecondStyleWidget extends StatelessWidget {
                                 levelDetailPage,
                               );
                             },
-                            child: Card(
-                              color: colors[index % 4],
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    15,
-                                  ),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    level?.image ?? "",
-                                    width: 55,
-                                    height: 55,
-                                    fit: BoxFit.cover,
-                                    frameBuilder: (c, w, _, __) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        child: w,
-                                      );
-                                    },
-                                  ),
-                                  verticalSpace(),
-                                  Text(
-                                    level?.name ?? "",
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      color: Colors.white,
+                            child:
+                                LayoutBuilder(builder: (context, constratins) {
+                              log("===Card's max height: ${constratins.maxHeight}");
+                              return Card(
+                                color: colors[index % 4],
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      15,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      level?.image ?? "",
+                                      width: 55,
+                                      height: 55,
+                                      fit: BoxFit.cover,
+                                      frameBuilder: (c, w, _, __) {
+                                        return ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                          child: w,
+                                        );
+                                      },
+                                    ),
+                                    verticalSpace(),
+                                    Text(
+                                      level?.name ?? "",
+                                      style: textTheme.headlineSmall?.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                           ),
                         ),
                       );

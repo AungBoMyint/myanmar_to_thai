@@ -21,8 +21,8 @@ class _CompletePageState extends State<CompletePage> {
 
   // TODO: replace this test ad unit with your own ad unit.
   final adUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/1033173712'
-      : 'ca-app-pub-3940256099942544/4411468910';
+      ? 'ca-app-pub-4330867676940675/5503315606'
+      : 'ca-app-pub-4330867676940675/8260947676';
 
   /// Loads an interstitial ad.
   Future<void> loadAd() async {

@@ -225,10 +225,10 @@ class QuestionController extends GetxController {
   // TODO: replace this test ad unit with your own ad unit.
   final adUnitId = Platform.isAndroid
       ? 'ca-app-pub-4330867676940675/5503315606'
-      : 'ca-app-pub-4741364579691602/9415940222';
+      : 'ca-app-pub-4330867676940675/8260947676';
   final bannerAdUnitId = Platform.isAndroid
       ? 'ca-app-pub-4330867676940675/9532978388'
-      : 'ca-app-pub-4741364579691602/6076542582';
+      : 'ca-app-pub-4330867676940675/2873460447';
 
   /// Loads an interstitial ad.
   Future<void> loadAd() async {
@@ -256,9 +256,8 @@ class QuestionController extends GetxController {
                     Get.toNamed(completePage, arguments: {
                       "title": completeQuizTitleAlternatives[Random()
                           .nextInt(completeQuizTitleAlternatives.length)],
-                      "description": completeQuizDescriptionAlternatives[
-                          Random().nextInt(
-                              completeQuizDescriptionAlternatives.length)],
+                      "description":
+                          "သင် အဖြေများကို အောင်မြင်စွာ ဖြေဆိုနိုင်ခဲ့ပါပြီ ။ သင်၏ ကြိုးစားအားထုတ်မှုအား ဂုဏ်ပြုအပ်ပါတယ် ခင်ဗျာ ။",
                     });
                   } else {
                     Get.back();
